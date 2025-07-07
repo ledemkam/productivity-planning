@@ -10,5 +10,5 @@ import { environment } from '../environments/environment';
 })
 export class AppComponent {
   //eslint-disable-next-line @typescript-eslint/no-explicit-any
- readonly isStaging = !(environment as any).production
+ readonly isStaging = !(environment as any).production;
 }
