@@ -4,6 +4,13 @@ import { environment } from '../../environments/environment.dev';
 import { Observable } from 'rxjs';
 
 
+interface FirebaseResponseRegister {
+  idToken: string,
+  email: string,
+  refreshToken: string,
+  expiresIn: string,
+  localId: string,
+}
 
 /**
  *
@@ -19,14 +26,14 @@ export class AuthenticationService {
   
   readonly #http = inject(HttpClient)
   
-  register(email: string, password: string): Observable<unknown> {
-      const apiKey = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebaseConfig.apiKey}`;
+  register(email: string, password: string): Observable<FirebaseResponseRegister> {
+      const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebaseConfig.apiKey}`;
       const body = {
         email,
         password,
         returnSecureToken: true
       };
-      return this.#http.post(apiKey, body);
+      return this.#http.post<FirebaseResponseRegister>(url, body);
 
      }
 }
