@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.dev';
-import { Observable } from 'rxjs';
+import { Observable} from 'rxjs';
 
 
 interface FirebaseResponseRegister {
@@ -47,4 +47,24 @@ export class AuthenticationService {
     return this.#http.post<unknown>(url, body);
   }
 
+   save(email: string, userId: string, bearerToken: string): Observable<unknown> {
+    const baseUrl =
+    `https://identitytoolkit.googleapis.com/v1/projects/${environment.firebaseConfig.projectId}/databases/(default)/documents`
+    const url = `${baseUrl}/users?key=${environment.firebaseConfig.apiKey}&documentId=${userId}`;
+    const body = {
+      fields: {
+        id: { stringValue: userId },
+        email: { stringValue: email },
+      }
+    }
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${bearerToken}`
+    })
+    const options = { headers}
+
+    return this.#http.post(url, body, options)
+
+
+  }
 }
