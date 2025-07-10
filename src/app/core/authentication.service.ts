@@ -4,12 +4,22 @@ import { environment } from '../../environments/environment.dev';
 import { Observable} from 'rxjs';
 
 
-interface FirebaseResponseRegister {
+interface FirebaseResponseSingUp {
   idToken: string,
   email: string,
   refreshToken: string,
   expiresIn: string,
   localId: string,
+}
+
+interface FirebaseResponseSingIn {
+  displayName: string;
+  email: string;
+  expiresIn: string;
+  idToken: string;
+  localId: string;
+  refreshToken: string;
+  registered: boolean;
 }
 
 /**
@@ -26,34 +36,36 @@ export class AuthenticationService {
 
   readonly #http = inject(HttpClient)
 
-  register(email: string, password: string): Observable<FirebaseResponseRegister> {
+  register(email: string, password: string): Observable<FirebaseResponseSingUp> {
       const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebaseConfig.apiKey}`;
       const body = {
         email,
         password,
         returnSecureToken: true
       };
-      return this.#http.post<FirebaseResponseRegister>(url, body);
+      return this.#http.post<FirebaseResponseSingUp>(url, body);
 
      }
 
-   login(email: string, password: string): Observable<unknown> {
+   login(email: string, password: string): Observable<FirebaseResponseSingIn> {
     const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebaseConfig.apiKey}`;
     const body = {
       email,
       password,
       returnSecureToken: true
     };
-    return this.#http.post<unknown>(url, body);
+    return this.#http.post<FirebaseResponseSingIn>(url, body);
   }
 
    save(email: string, userId: string, bearerToken: string): Observable<unknown> {
     const baseUrl =
-    `https://identitytoolkit.googleapis.com/v1/projects/${environment.firebaseConfig.projectId}/databases/(default)/documents`
-    const url = `${baseUrl}/users?key=${environment.firebaseConfig.apiKey}&documentId=${userId}`;
+    `https://firestore.googleapis.com/v1/projects/${environment.firebaseConfig.projectId}/databases/(default)/documents`
+    const userFirestoreCollectionId = 'users';
+    const url = `${baseUrl}/${userFirestoreCollectionId}?key=${environment.firebaseConfig.apiKey}&documentId=${userId}`;
+
     const body = {
       fields: {
-        id: { stringValue: userId },
+
         email: { stringValue: email },
       }
     }

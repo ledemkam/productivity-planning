@@ -1,3 +1,4 @@
+import { switchMap } from 'rxjs';
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AuthenticationService } from './core/authentication.service';
@@ -24,14 +25,12 @@ onLogin(){
   this.#AuthentificationService.login(
    email,
    password
-  ).subscribe({
-    next: (response) => {
-      console.log('Connexion réussie:', response);
-    },
-    error: (error) => {
-      console.error('Erreur de connexion:', error);
-    }
-  });
+  ).pipe(
+    switchMap((response) => {
+       const {email, localId, idToken} = response;
+    return this.#AuthentificationService.save(email, localId, idToken)
+    })
+  ).subscribe(response => console.log(response))
 }
   }
 
