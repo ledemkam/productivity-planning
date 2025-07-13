@@ -7,5 +7,7 @@ import { HomeBannerDumbComponent } from './home-banner/home-banner.dumb.componen
   styleUrl: './home.page.component.css'
 })
 export class HomePageComponent {
-
+  onBannerClick(event: string): void {
+    console.log(event);
+  }
 }
