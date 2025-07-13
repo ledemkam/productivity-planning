@@ -1,10 +1,15 @@
 <div
   class="banner-container text-white d-flex flex-column justify-content-center align-items-center text-center"
 >
-  <h1 class="display-4 fw-bold">{{ title() }}</h1>
-  <p class="lead mt-3">{{ description() }}</p>
-  <a href="#" class="btn btn-primary btn-lg mt-4">
-    <button type="button" (click)="clicked.emit()" class="btn btn-primary btn-lg mt-4">
+  <h1 data-testid="banner-title" class="display-4 fw-bold">{{ title() }}</h1>
+<p data-testid="banner-description" class="lead mt-3">{{ description() }}</p>
+<a
+  data-testid="banner-button"
+  href="#"
+  class="btn btn-primary btn-lg mt-4"
+  (click)="clicked.emit()"
+>   
+ <button type="button" class="btn btn-primary btn-lg mt-4">
     {{ button() }}
   </button>
   </a>
