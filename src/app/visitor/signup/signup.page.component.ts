@@ -13,7 +13,6 @@ import { UserStore } from '../../core/store/user.store';
 })
 export class SignupPageComponent {
   readonly store = inject(UserStore)
-  //readonly toastr = inject(ToastrService);
   readonly authenticationService = inject(AuthenticationService);
   readonly  name = signal('')
   readonly email = signal('')
@@ -27,7 +26,7 @@ export class SignupPageComponent {
 
   onSubmit() {
     console.log("form submitted");
-  
+
   }
 
 }
