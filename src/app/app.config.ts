@@ -4,6 +4,8 @@ import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideToastr } from 'ngx-toastr';
+import { AuthenticationService } from './core/authentication.service';
+import { AuthenticationServiceFirebase } from './core/authentification-firebase.service';
 
 
 
@@ -19,6 +21,10 @@ export const appConfig: ApplicationConfig = {
       timeOut: 3000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
-    })
+    }),
+    {
+      provide: AuthenticationService,
+      useClass: AuthenticationServiceFirebase
+    }
     ]
 };

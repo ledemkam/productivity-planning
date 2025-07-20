@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component,  computed,  signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component,  computed,  inject,  signal } from '@angular/core';
+import { AuthenticationService } from '../../core/authentication.service';
 @Component({
   selector: 'app-signup',
   imports: [],
@@ -8,7 +9,7 @@ import { ChangeDetectionStrategy, Component,  computed,  signal } from '@angular
 })
 export class SignupPageComponent {
   //readonly toastr = inject(ToastrService);
-
+  readonly authenticationService = inject(AuthenticationService);
   readonly  name = signal('')
   readonly email = signal('')
   readonly password = signal('')
@@ -18,4 +19,12 @@ export class SignupPageComponent {
   () => this.password() === this.confirmPassword() && this.password().length > 0
   )
 
+  onSubmit() {
+    console.log("form submitted");
+    this.authenticationService.register(this.email(), this.password())
+    
+  }
+
 }
+
+
