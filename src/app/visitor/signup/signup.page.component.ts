@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component,  computed,  inject,  signal} from '
 import { AuthenticationService } from '../../core/authentication.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { UserStore } from '../../core/store/user.store';
 
 @Component({
   selector: 'app-signup',
@@ -11,6 +12,7 @@ import { FormsModule } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SignupPageComponent {
+  readonly store = inject(UserStore)
   //readonly toastr = inject(ToastrService);
   readonly authenticationService = inject(AuthenticationService);
   readonly  name = signal('')
@@ -25,9 +27,7 @@ export class SignupPageComponent {
 
   onSubmit() {
     console.log("form submitted");
-    this.authenticationService.register(this.email(), this.password()).subscribe((response) => {
-      console.log("Registration successful user with id: " , response.userId);
-    });
+  
   }
 
 }
