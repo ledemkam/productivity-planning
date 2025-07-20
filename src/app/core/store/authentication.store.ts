@@ -1,0 +1,7 @@
+
+
+type AuthenticationState = {
+
+  isLoading: boolean;
+  
+}

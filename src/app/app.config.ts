@@ -5,7 +5,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideToastr } from 'ngx-toastr';
 import { AuthenticationService } from './core/authentication.service';
-import { AuthenticationServiceFirebase } from './core/authentification-firebase.service';
+import { AuthenticationServiceFirebase } from './core/authentication-firebase.service';
 
 
 
