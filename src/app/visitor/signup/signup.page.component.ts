@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-
+import { ChangeDetectionStrategy, Component,  computed,  signal } from '@angular/core';
 @Component({
   selector: 'app-signup',
   imports: [],
@@ -8,5 +7,15 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SignupPageComponent {
+  //readonly toastr = inject(ToastrService);
+
+  readonly  name = signal('')
+  readonly email = signal('')
+  readonly password = signal('')
+  readonly confirmPassword = signal('')
+
+  readonly isPasswordsMatchValid = computed(()  =>
+  () => this.password() === this.confirmPassword() && this.password().length > 0
+  )
 
 }
