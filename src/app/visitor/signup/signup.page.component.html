@@ -1,0 +1,106 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-4">
+      <form (ngSubmit)="onSubmit()" #signupForm="ngForm">
+        
+        <!-- NAME -->
+        <div class="mb-3">
+          <label for="name" class="form-label">Nom</label>
+          <input
+            #nameField="ngModel"
+            [(ngModel)]="name"
+            type="text"
+            name="name"
+            class="form-control"
+            id="name"
+            required
+            minlength="3"
+            maxlength="20"
+            pattern="[a-zA-Z]+"
+            [class.is-invalid]="nameField.dirty && nameField.invalid"
+          />
+          @if(nameField.dirty && nameField.hasError('required')) {
+            <div class="invalid-feedback">Le nom est requis.</div>
+          }
+          @if(nameField.dirty && nameField.hasError('minlength')) {
+            <div class="invalid-feedback">Le nom doit contenir au moins 3 caractères.</div>
+          }
+          @if(nameField.dirty && nameField.hasError('pattern')) {
+            <div class="invalid-feedback">Le nom ne peut contenir que des lettres.</div>
+          }
+        </div>
+
+        <!-- EMAIL -->
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            type="email"
+            [(ngModel)]="email"
+            name="email"
+            #emailField="ngModel"
+            class="form-control"
+            id="email"
+            autocomplete="email"
+            required
+            [class.is-invalid]="emailField.dirty && emailField.invalid"
+          />
+          @if(emailField.dirty && emailField.hasError('required')) {
+            <div class="invalid-feedback">L'email est requis.</div>
+          }
+          @if(emailField.dirty && emailField.hasError('email')) {
+            <div class="invalid-feedback">Veuillez entrer un email valide.</div>
+          }
+        </div>
+
+        <!-- PASSWORD -->
+        <div class="mb-3">
+          <label for="password" class="form-label">Mot de passe</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            autocomplete="new-password"
+            [(ngModel)]="password"
+            #passwordField="ngModel"
+            name="password"
+            required
+            minlength="8"
+            [class.is-invalid]="passwordField.dirty && passwordField.invalid"
+          />
+          @if(passwordField.dirty && passwordField.hasError('required')) {
+            <div class="invalid-feedback">Le mot de passe est requis.</div>
+          }
+          @if(passwordField.dirty && passwordField.hasError('minlength')) {
+            <div class="invalid-feedback">Le mot de passe doit contenir au moins 8 caractères.</div>
+          }
+        </div>
+
+        <!-- CONFIRM PASSWORD -->
+        <div class="mb-3">
+          <label for="confirm-password" class="form-label">Confirmer le mot de passe</label>
+          <input
+            [(ngModel)]="confirmPassword"
+            #confirmPasswordField="ngModel"
+            name="confirmPassword"
+            type="password"
+            class="form-control"
+            id="confirm-password"
+            autocomplete="new-password"
+            required
+            [class.is-invalid]="confirmPasswordField.dirty && confirmPasswordField.invalid"
+          />
+          @if(confirmPasswordField.dirty && confirmPasswordField.hasError('required')) {
+            <div class="invalid-feedback">La confirmation du mot de passe est requise.</div>
+          }
+          @if(confirmPasswordField.dirty && password !== confirmPassword) {
+            <div class="invalid-feedback">Les mots de passe ne correspondent pas.</div>
+          }
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100" [disabled]="signupForm.invalid">
+          S'inscrire
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
