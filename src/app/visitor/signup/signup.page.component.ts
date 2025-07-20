@@ -14,13 +14,14 @@ export class SignupPageComponent {
   //readonly toastr = inject(ToastrService);
   readonly authenticationService = inject(AuthenticationService);
   readonly  name = signal('')
-  readonly email = signal('jadesignal@gmail.com')
-  readonly password = signal('azerty123')
+  readonly email = signal('')
+  readonly password = signal('')
   readonly confirmPassword = signal('')
+  readonly isPasswordMatch = computed(
+    () => this.password() === this.confirmPassword()
+  );
 
-  readonly isPasswordsMatchValid = computed(()  =>
-  () => this.password() === this.confirmPassword() && this.password().length > 0
-  )
+  readonly isLoading = signal(false);
 
   onSubmit() {
     console.log("form submitted");
