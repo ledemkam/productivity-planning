@@ -9,6 +9,7 @@ import { AuthenticationService } from '../../core/authentication.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserStore } from '../../core/store/user.store';
+import {  Visitor } from '../../core/entity/user.interface';
 
 @Component({
   selector: 'app-signup',
@@ -32,5 +33,12 @@ export class SignupPageComponent {
 
   onSubmit() {
     console.log('form submitted');
+    const visitor: Visitor = {
+      name: this.name(),
+      email: this.email(),
+      password: this.password(),
+    };
+    this.store.register(visitor)
+
   }
 }
