@@ -1,6 +1,7 @@
 # ProductivityPlanning
 
 A webapp for personnal productivity using Pomodoro technique
+
 ```
 
 ## Getting Started
@@ -13,6 +14,7 @@ Once the server is running, open your browser and navigate to `http://localhost:
 
  Create feature branch delivery (e.g, 'Feature/#1')
  Open PR to merge in 'develop'.
- One reviewer is required. 
+ One reviewer is required.
  CI steps are mandatory.
  Then merge accepted !
+```

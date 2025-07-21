@@ -1,40 +1,42 @@
-import { computed , inject} from "@angular/core";
-import { patchState, signalStore, withComputed, withMethods, withState } from "@ngrx/signals";
-import { AuthenticationService } from "../authentication.service";
+import { computed, inject } from '@angular/core';
+import {
+  patchState,
+  signalStore,
+  withComputed,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
+import { AuthenticationService } from '../authentication.service';
+import { User } from '../entity/user.interface';
 
 
-interface UserState{
-  username: string;
-  email: string;
-}
 
 export const UserStore = signalStore(
   {
     providedIn: 'root',
   },
-  withState<UserState>({
-    username: '',
+  withState<User>({
+    id: '',
+    name: '',
     email: '',
   }),
   withComputed((store) => {
     const isGoogleUser = computed(() => store.email().endsWith('@google.com'));
     return {
-      isGoogleUser
+      isGoogleUser,
     };
   }),
   withMethods(
     (store, authenticationService = inject(AuthenticationService)) => ({
-       register(email: string, password: string):  void {
-         authenticationService
-           .register(email, password)
-           .subscribe((response) => {
-             patchState(store,{
-               email: response.userId
-             })
-           })
+      register(email: string, password: string): void {
+        authenticationService
+          .register(email, password)
+          .subscribe((response) => {
+            patchState(store, {
+              email: response.userId,
+            });
+          });
       },
-      
-      
-    })
-  )
-)
+    }),
+  ),
+);

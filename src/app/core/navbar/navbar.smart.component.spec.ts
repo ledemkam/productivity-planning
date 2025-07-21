@@ -8,9 +8,8 @@ describe('NavbarSmartComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NavbarSmartComponent]
-    })
-    .compileComponents();
+      imports: [NavbarSmartComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(NavbarSmartComponent);
     component = fixture.componentInstance;

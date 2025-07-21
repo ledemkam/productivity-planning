@@ -13,9 +13,8 @@ describe('HomeBannerDumbComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HomeBannerDumbComponent]
-    })
-    .compileComponents();
+      imports: [HomeBannerDumbComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(HomeBannerDumbComponent);
     component = fixture.componentInstance;
@@ -25,13 +24,13 @@ describe('HomeBannerDumbComponent', () => {
     fixture.detectChanges();
   });
 
-   beforeEach(() => {
+  beforeEach(() => {
     title = fixture.debugElement.query(By.css('[data-testid="banner-title"]'));
     description = fixture.debugElement.query(
-      By.css('[data-testid="banner-description"]')
+      By.css('[data-testid="banner-description"]'),
     );
     button = fixture.debugElement.query(
-      By.css('[data-testid="banner-button"]')
+      By.css('[data-testid="banner-button"]'),
     );
   });
 
@@ -44,7 +43,7 @@ describe('HomeBannerDumbComponent', () => {
   });
   it('should display description', () => {
     expect(description.nativeElement.textContent).toContain(
-      'expectedDescription'
+      'expectedDescription',
     );
   });
   it('should display button', () => {

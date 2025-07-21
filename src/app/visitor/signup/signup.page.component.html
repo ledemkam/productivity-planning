@@ -20,20 +20,24 @@
             [class.is-invalid]="nameField.dirty && nameField.invalid"
           />
         </div>
-        @if(nameField.dirty && nameField.hasError('required')) {
-          <div class="form-text text-danger" data-testid="error-name-required">Name is required.</div>
+        @if (nameField.dirty && nameField.hasError("required")) {
+          <div class="form-text text-danger" data-testid="error-name-required">
+            Name is required.
+          </div>
         }
-        @if(nameField.dirty && nameField.hasError('minlength')) {
+        @if (nameField.dirty && nameField.hasError("minlength")) {
           <div class="form-text text-danger" data-testid="error-name-minlength">
-            Name must contain at least {{ nameField.getError('minlength').requiredLength }} caracters.
+            Name must contain at least
+            {{ nameField.getError("minlength").requiredLength }} caracters.
           </div>
         }
-        @if(nameField.dirty && nameField.hasError('maxlength')) {
+        @if (nameField.dirty && nameField.hasError("maxlength")) {
           <div class="form-text text-danger" data-testid="error-name-maxlength">
-            Name must contain maximum {{ nameField.getError('maxlength').requiredLength }} caracters.
+            Name must contain maximum
+            {{ nameField.getError("maxlength").requiredLength }} caracters.
           </div>
         }
-        @if(nameField.dirty && nameField.hasError('pattern')) {
+        @if (nameField.dirty && nameField.hasError("pattern")) {
           <div class="form-text text-danger" data-testid="error-name-pattern">
             Name must contain only letters.
           </div>
@@ -55,15 +59,17 @@
             [class.is-invalid]="emailField.dirty && emailField.invalid"
           />
         </div>
-        @if(emailField.dirty && emailField.hasError('required')) {
-          <div class="form-text text-danger" data-testid="error-email-required">Email is required.</div>
+        @if (emailField.dirty && emailField.hasError("required")) {
+          <div class="form-text text-danger" data-testid="error-email-required">
+            Email is required.
+          </div>
         }
-        @if(emailField.dirty && emailField.hasError('email')) {
+        @if (emailField.dirty && emailField.hasError("email")) {
           <div class="form-text text-danger" data-testid="error-email-pattern">
             Email must be valid.
           </div>
         }
-       
+
         <!-- PASSWORD -->
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
@@ -82,17 +88,29 @@
             [class.is-invalid]="passwordField.dirty && passwordField.invalid"
           />
         </div>
-        @if(passwordField.dirty && passwordField.hasError('required')) {
-          <div class="form-text text-danger" data-testid="error-password-required">Password is required.</div>
+        @if (passwordField.dirty && passwordField.hasError("required")) {
+          <div
+            class="form-text text-danger"
+            data-testid="error-password-required"
+          >
+            Password is required.
+          </div>
         }
-        @if(passwordField.dirty && passwordField.hasError('minlength')) {
-          <div class="form-text text-danger" data-testid="error-password-minlength">
+        @if (passwordField.dirty && passwordField.hasError("minlength")) {
+          <div
+            class="form-text text-danger"
+            data-testid="error-password-minlength"
+          >
             Password must contain at least 8 characters.
           </div>
         }
-        @if(passwordField.dirty && passwordField.hasError('pattern')) {
-          <div class="form-text text-danger" data-testid="error-password-pattern">
-            Password must contain at least one uppercase letter, one lowercase letter, one digit and one special character (&#64;$!%*?&).
+        @if (passwordField.dirty && passwordField.hasError("pattern")) {
+          <div
+            class="form-text text-danger"
+            data-testid="error-password-pattern"
+          >
+            Password must contain at least one uppercase letter, one lowercase
+            letter, one digit and one special character (&#64;$!%*?&).
           </div>
         }
         <!-- CONFIRM PASSWORD -->
@@ -115,8 +133,11 @@
             required
           />
         </div>
-        @if(confirmPasswordField.dirty && !isPasswordMatch()) {
-          <div class="form-text text-danger" data-testid="error-confirm-password-match">
+        @if (confirmPasswordField.dirty && !isPasswordMatch()) {
+          <div
+            class="form-text text-danger"
+            data-testid="error-confirm-password-match"
+          >
             Passwords do not match.
           </div>
         }

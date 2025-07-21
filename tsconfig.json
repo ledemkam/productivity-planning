@@ -24,7 +24,6 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true,
     "extendedDiagnostics": {
-
       // The category to use for any diagnostics not listed in `checks` above.
       "defaultCategory": "error"
     }

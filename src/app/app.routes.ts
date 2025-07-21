@@ -6,12 +6,11 @@ export const routes: Routes = [
   {
     path: 'signup',
     component: SignupPageComponent,
-    title: 'Sign Up'
+    title: 'Sign Up',
   },
   {
     path: '',
     component: HomePageComponent,
-    title: 'Productivity Planner'
-  }
-
+    title: 'Productivity Planner',
+  },
 ];

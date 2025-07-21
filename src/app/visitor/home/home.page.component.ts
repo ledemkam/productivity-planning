@@ -3,12 +3,12 @@ import { HomeBannerDumbComponent } from './home-banner/home-banner.dumb.componen
 import { HomepageFeatureCardListDumbComponent } from './homepage-feature-card-list/homepage-feature-card-list.dumb.component';
 
 @Component({
-  imports: [HomeBannerDumbComponent,HomepageFeatureCardListDumbComponent],
+  imports: [HomeBannerDumbComponent, HomepageFeatureCardListDumbComponent],
   templateUrl: './home.page.component.html',
-  styleUrl: './home.page.component.css'
+  styleUrl: './home.page.component.css',
 })
 export class HomePageComponent {
-   featureCardList = signal([
+  featureCardList = signal([
     {
       name: 'Planifier sa semaine',
       icon: 'calendar-heart-fill',
