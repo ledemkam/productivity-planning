@@ -9,7 +9,7 @@ import { AuthenticationService } from '../../core/authentication.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserStore } from '../../core/store/user.store';
-import {  Visitor } from '../../core/entity/user.interface';
+import { Visitor } from '../../core/entity/user.interface';
 
 @Component({
   selector: 'app-signup',
@@ -38,7 +38,6 @@ export class SignupPageComponent {
       email: this.email(),
       password: this.password(),
     };
-    this.store.register(visitor)
-
+    this.store.register(visitor);
   }
 }

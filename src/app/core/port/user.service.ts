@@ -3,7 +3,6 @@ import { Observable, of } from 'rxjs';
 import { UserFirebaseService } from './user-firebase.service';
 import { User } from '../entity/user.interface';
 
-
 @Injectable({
   providedIn: 'root',
   useClass: UserFirebaseService,
