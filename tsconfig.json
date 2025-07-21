@@ -16,7 +16,11 @@
     "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
-    "module": "ES2022"
+    "module": "ES2022",
+    "baseUrl": ".",
+    "paths": {
+      "@env/*": ["src/environments/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
@@ -24,7 +28,6 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true,
     "extendedDiagnostics": {
-
       // The category to use for any diagnostics not listed in `checks` above.
       "defaultCategory": "error"
     }

@@ -7,7 +7,7 @@ import { NgClass } from '@angular/common';
   imports: [NgClass],
   templateUrl: './homepage-feature-card-list.dumb.component.html',
   styleUrl: './homepage-feature-card-list.dumb.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomepageFeatureCardListDumbComponent {
   readonly featureCardList = input.required<FeatureCardList>();
