@@ -41,9 +41,10 @@ export const UserStore = signalStore(
               name: visitor.name,
               email: visitor.email,
             };
-            userService.create(user, response.jwtToken).subscribe(() => {
+            userService.create(user, response.jwtToken).subscribe({
+              next: () => {
               patchState(store, { user });
-              console.log('User created successfully:', user);
+}
             });
           });
       },
