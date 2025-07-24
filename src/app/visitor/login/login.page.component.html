@@ -1,7 +1,7 @@
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-4">
-      <form  #form="ngForm">
+      <form #form="ngForm">
         <!-- EMAIL -->
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
@@ -19,21 +19,23 @@
             [class.is-invalid]="emailField.dirty && emailField.invalid"
           />
         </div>
-         @if (emailField.dirty && emailField.hasError("required")) {
-          <div
-            class="form-text text-danger"
-            data-testid="error-email-required"
-          >
-            Email is required.
-          </div>
-        }
-        @if (emailField.dirty && emailField.hasError("email")) {
-          <div
-            class="form-text text-danger"
-            data-testid="error-email-pattern"
-          >
-            Email must be valid.
-          </div>
+        @if (emailField.dirty) {
+          @if (emailField.hasError("required")) {
+            <div
+              class="form-text text-danger"
+              data-testid="error-email-required"
+            >
+              Email is required.
+            </div>
+          }
+          @if (emailField.hasError("email")) {
+            <div
+              class="form-text text-danger"
+              data-testid="error-email-pattern"
+            >
+              Email must be valid.
+            </div>
+          }
         }
         <!-- PASSWORD -->
         <div class="mb-3">
@@ -60,17 +62,16 @@
             Password is required.
           </div>
         }
-  
+
         <button
           data-testid="submit-button"
           type="submit"
           class="btn btn-primary w-100 mt-3"
           disabled
-          >
+        >
           Submit
         </button>
       </form>
     </div>
   </div>
 </div>
-

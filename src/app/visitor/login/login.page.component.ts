@@ -6,11 +6,9 @@ import { FormsModule } from '@angular/forms';
   imports: [FormsModule],
   templateUrl: './login.page.component.html',
   styleUrl: './login.page.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginPageComponent {
-
   readonly email = signal('');
   readonly password = signal('');
-
 }
