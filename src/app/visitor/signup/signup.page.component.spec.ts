@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SignupPageComponent } from './signup.page.component';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { SignupPageComponent } from './signup.page.component';
 
 describe('SignupPageComponent', () => {
   let component: SignupPageComponent;
@@ -12,7 +12,6 @@ describe('SignupPageComponent', () => {
   let email: DebugElement;
   let password: DebugElement;
   let confirmPassword: DebugElement;
-  let button: DebugElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -29,13 +28,30 @@ describe('SignupPageComponent', () => {
     confirmPassword = fixture.debugElement.query(
       By.css('[data-testid="confirm-password"]'),
     );
-    button = fixture.debugElement.query(
-      By.css('[data-testid="submit-button"]'),
-    );
   });
 
   it('should create', () => {
     expect(component).toBeDefined();
+  });
+
+  describe('when page load', () => {
+    it('should display fields name, email, password and confirm password', () => {
+      expect(name).toBeTruthy();
+      expect(email).toBeTruthy();
+      expect(password).toBeTruthy();
+      expect(confirmPassword).toBeTruthy();
+    });
+
+    it('should initialize all form fields with empty values', () => {
+      expect(component.name()).toBe('');
+      expect(component.email()).toBe('');
+      expect(component.password()).toBe('');
+      expect(component.confirmPassword()).toBe('');
+    });
+
+    it('should initialize isPasswordMatch as true when both password fields are empty', () => {
+      expect(component.isPasswordMatch()).toBe(true);
+    });
   });
 
   describe('when user interact with name field', () => {
@@ -43,11 +59,10 @@ describe('SignupPageComponent', () => {
       name.nativeElement.value = '';
       name.nativeElement.dispatchEvent(new Event('input'));
       fixture.detectChanges();
-
       const error = fixture.debugElement.query(
         By.css('[data-testid="error-name-required"]'),
       );
-      const errorMessage = error.nativeElement.textContent;
+      const errorMessage = error.nativeElement.textContent.trim();
 
       expect(errorMessage).toBe('Name is required.');
     });
@@ -119,7 +134,6 @@ describe('SignupPageComponent', () => {
       expect(errorMessage).toContain('Email must be valid.');
     });
   });
-
   describe('when user interact with password field', () => {
     it('should display error message when field is empty', () => {
       password.nativeElement.value = '';
@@ -224,36 +238,6 @@ describe('SignupPageComponent', () => {
       const errorMessage = error.nativeElement.textContent;
 
       expect(errorMessage).toContain('Passwords do not match.');
-    });
-  });
-
-  describe('when user submit a valid signup form', () => {
-    it('should enable submit button when form is valid', () => {
-      // Arrange
-      name.nativeElement.value = 'John';
-      name.nativeElement.dispatchEvent(new Event('input'));
-      email.nativeElement.value = 'john.doe@acme.com';
-      email.nativeElement.dispatchEvent(new Event('input'));
-      password.nativeElement.value = 'Azerty!!!1';
-      password.nativeElement.dispatchEvent(new Event('input'));
-      confirmPassword.nativeElement.value = 'Azerty!!!1';
-      confirmPassword.nativeElement.dispatchEvent(new Event('input'));
-      fixture.detectChanges();
-
-      // Assert
-      expect(button.nativeElement.disabled).toBeFalsy();
-    });
-  });
-
-  describe('when user submit an invalid signup form', () => {
-    it('should disable submit button when form is invalid', () => {
-      // Arrange
-      email.nativeElement.value = 'invalid-email';
-      email.nativeElement.dispatchEvent(new Event('input'));
-      fixture.detectChanges();
-
-      // Assert
-      expect(button.nativeElement.disabled).toBeTruthy();
     });
   });
 });

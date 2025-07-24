@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 import { UserFirebaseService } from './user-firebase.service';
 import { User } from '../entity/user.interface';
 
@@ -8,5 +8,5 @@ import { User } from '../entity/user.interface';
   useClass: UserFirebaseService,
 })
 export abstract class UserService {
- abstract create(user: User, bearerToken: string): Observable<void>;
+  abstract create(user: User, bearerToken: string): Observable<void>;
 }

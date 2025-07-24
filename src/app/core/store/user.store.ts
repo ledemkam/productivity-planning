@@ -43,8 +43,8 @@ export const UserStore = signalStore(
             };
             userService.create(user, response.jwtToken).subscribe({
               next: () => {
-              patchState(store, { user });
-}
+                patchState(store, { user });
+              },
             });
           });
       },
