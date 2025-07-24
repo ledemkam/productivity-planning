@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SignupPageComponent } from './signup.page.component';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { SignupPageComponent } from './signup.page.component';
 
 describe('SignupPageComponent', () => {
   let component: SignupPageComponent;
@@ -35,11 +35,22 @@ describe('SignupPageComponent', () => {
   });
 
   describe('when page load', () => {
-    it('should diplay fields name, email, password and confirm password', () => {
+    it('should display fields name, email, password and confirm password', () => {
       expect(name).toBeTruthy();
       expect(email).toBeTruthy();
       expect(password).toBeTruthy();
       expect(confirmPassword).toBeTruthy();
+    });
+
+    it('should initialize all form fields with empty values', () => {
+      expect(component.name()).toBe('');
+      expect(component.email()).toBe('');
+      expect(component.password()).toBe('');
+      expect(component.confirmPassword()).toBe('');
+    });
+
+    it('should initialize isPasswordMatch as true when both password fields are empty', () => {
+      expect(component.isPasswordMatch()).toBe(true);
     });
   });
 
@@ -51,7 +62,7 @@ describe('SignupPageComponent', () => {
       const error = fixture.debugElement.query(
         By.css('[data-testid="error-name-required"]'),
       );
-      const errorMessage = error.nativeElement.textContent;
+      const errorMessage = error.nativeElement.textContent.trim();
 
       expect(errorMessage).toBe('Name is required.');
     });
