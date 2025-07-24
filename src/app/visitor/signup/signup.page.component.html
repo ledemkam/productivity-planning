@@ -1,7 +1,7 @@
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-4">
-      <form (ngSubmit)="onSubmit()" #form="ngForm">
+      <form #form="ngForm">
         <!-- NAME -->
         <div class="mb-3">
           <label for="name" class="form-label">Name</label>
@@ -20,27 +20,38 @@
             [class.is-invalid]="nameField.dirty && nameField.invalid"
           />
         </div>
-        @if (nameField.dirty && nameField.hasError("required")) {
-          <div class="form-text text-danger" data-testid="error-name-required">
-            Name is required.
-          </div>
-        }
-        @if (nameField.dirty && nameField.hasError("minlength")) {
-          <div class="form-text text-danger" data-testid="error-name-minlength">
-            Name must contain at least
-            {{ nameField.getError("minlength").requiredLength }} caracters.
-          </div>
-        }
-        @if (nameField.dirty && nameField.hasError("maxlength")) {
-          <div class="form-text text-danger" data-testid="error-name-maxlength">
-            Name must contain maximum
-            {{ nameField.getError("maxlength").requiredLength }} caracters.
-          </div>
-        }
-        @if (nameField.dirty && nameField.hasError("pattern")) {
-          <div class="form-text text-danger" data-testid="error-name-pattern">
-            Name must contain only letters.
-          </div>
+        @if (nameField.dirty) {
+          @if (nameField.hasError("required")) {
+            <div
+              class="form-text text-danger"
+              data-testid="error-name-required"
+            >
+              Name is required.
+            </div>
+          }
+          @if (nameField.dirty && nameField.hasError("minlength")) {
+            <div
+              class="form-text text-danger"
+              data-testid="error-name-minlength"
+            >
+              Name must contain at least
+              {{ nameField.getError("minlength").requiredLength }} caracters.
+            </div>
+          }
+          @if (nameField.hasError("maxlength")) {
+            <div
+              class="form-text text-danger"
+              data-testid="error-name-maxlength"
+            >
+              Name must contain maximum
+              {{ nameField.getError("maxlength").requiredLength }} caracters.
+            </div>
+          }
+          @if (nameField.hasError("pattern")) {
+            <div class="form-text text-danger" data-testid="error-name-pattern">
+              Name must contain only letters.
+            </div>
+          }
         }
         <!-- EMAIL -->
         <div class="mb-3">
@@ -59,15 +70,23 @@
             [class.is-invalid]="emailField.dirty && emailField.invalid"
           />
         </div>
-        @if (emailField.dirty && emailField.hasError("required")) {
-          <div class="form-text text-danger" data-testid="error-email-required">
-            Email is required.
-          </div>
-        }
-        @if (emailField.dirty && emailField.hasError("email")) {
-          <div class="form-text text-danger" data-testid="error-email-pattern">
-            Email must be valid.
-          </div>
+        @if (emailField.dirty) {
+          @if (emailField.hasError("required")) {
+            <div
+              class="form-text text-danger"
+              data-testid="error-email-required"
+            >
+              Email is required.
+            </div>
+          }
+          @if (emailField.hasError("email")) {
+            <div
+              class="form-text text-danger"
+              data-testid="error-email-pattern"
+            >
+              Email must be valid.
+            </div>
+          }
         }
 
         <!-- PASSWORD -->
@@ -88,30 +107,32 @@
             [class.is-invalid]="passwordField.dirty && passwordField.invalid"
           />
         </div>
-        @if (passwordField.dirty && passwordField.hasError("required")) {
-          <div
-            class="form-text text-danger"
-            data-testid="error-password-required"
-          >
-            Password is required.
-          </div>
-        }
-        @if (passwordField.dirty && passwordField.hasError("minlength")) {
-          <div
-            class="form-text text-danger"
-            data-testid="error-password-minlength"
-          >
-            Password must contain at least 8 characters.
-          </div>
-        }
-        @if (passwordField.dirty && passwordField.hasError("pattern")) {
-          <div
-            class="form-text text-danger"
-            data-testid="error-password-pattern"
-          >
-            Password must contain at least one uppercase letter, one lowercase
-            letter, one digit and one special character (&#64;$!%*?&).
-          </div>
+        @if (passwordField.dirty) {
+          @if (passwordField.hasError("required")) {
+            <div
+              class="form-text text-danger"
+              data-testid="error-password-required"
+            >
+              Password is required.
+            </div>
+          }
+          @if (passwordField.hasError("minlength")) {
+            <div
+              class="form-text text-danger"
+              data-testid="error-password-minlength"
+            >
+              Password must contain at least 8 characters.
+            </div>
+          }
+          @if (passwordField.hasError("pattern")) {
+            <div
+              class="form-text text-danger"
+              data-testid="error-password-pattern"
+            >
+              Password must contain at least one uppercase letter, one lowercase
+              letter, one digit and one special character (&#64;$!%*?&).
+            </div>
+          }
         }
         <!-- CONFIRM PASSWORD -->
         <div class="mb-3">
@@ -145,7 +166,7 @@
           data-testid="submit-button"
           type="submit"
           class="btn btn-primary w-100 mt-3"
-          [disabled]="form.invalid || !isPasswordMatch() || isLoading()"
+          [disabled]="form.invalid || !isPasswordMatch()"
         >
           Submit
         </button>

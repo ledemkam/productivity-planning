@@ -1,11 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LoginPageComponent } from './login.page.component';
 import { By } from '@angular/platform-browser';
+import { DebugElement } from '@angular/core';
 
 describe('LoginPageComponent', () => {
   let component: LoginPageComponent;
   let fixture: ComponentFixture<LoginPageComponent>;
+  let email: DebugElement;
+  let password: DebugElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -24,16 +26,14 @@ describe('LoginPageComponent', () => {
   describe('when page loading', () => {
     it('should display email field', () => {
       // Arrange
-      const email = fixture.debugElement.query(By.css('[data-testid="email"]'));
+      email = fixture.debugElement.query(By.css('[data-testid="email"]'));
       // Act
       // Assert
       expect(email).toBeTruthy();
     });
     it('should display password field', () => {
       // Arrange
-      const password = fixture.debugElement.query(
-        By.css('[data-testid="password"]'),
-      );
+      password = fixture.debugElement.query(By.css('[data-testid="password"]'));
       // Act
       // Assert
       expect(password).toBeTruthy();
@@ -43,7 +43,7 @@ describe('LoginPageComponent', () => {
   describe('when user interact with email field', () => {
     it('should display error message when field is empty', () => {
       // Arrange
-      const email = fixture.debugElement.query(By.css('[data-testid="email"]'));
+      email = fixture.debugElement.query(By.css('[data-testid="email"]'));
 
       // Act
       email.nativeElement.value = '';
@@ -60,7 +60,7 @@ describe('LoginPageComponent', () => {
     });
     it('should display error message when field do not contain a valid HTML5 email', () => {
       // Arrange
-      const email = fixture.debugElement.query(By.css('[data-testid="email"]'));
+      email = fixture.debugElement.query(By.css('[data-testid="email"]'));
 
       // Act
       email.nativeElement.value = 'invalid-email';
@@ -81,9 +81,7 @@ describe('LoginPageComponent', () => {
   describe('when user interact with password field', () => {
     it('should display error message when field is empty', () => {
       // Arrange
-      const password = fixture.debugElement.query(
-        By.css('[data-testid="password"]'),
-      );
+      password = fixture.debugElement.query(By.css('[data-testid="password"]'));
 
       // Act
       password.nativeElement.value = '';
