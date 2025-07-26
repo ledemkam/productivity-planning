@@ -12,6 +12,7 @@ import { RegisterUserUseCaseService } from './register-user.use-case.service';
 import { UserStore } from '@app/core/store/user.store';
 import { Visitor } from '@app/core/entity/user.interface';
 import { Router } from '@angular/router';
+import { EmailAlreadyTakenError } from './email-already-taken.error';
 
 @Component({
   selector: 'app-signup',
@@ -26,7 +27,7 @@ readonly authenticationService = inject(AuthenticationService);
 readonly #registerUserUseCase = inject(RegisterUserUseCaseService);
 readonly #router = inject(Router);
 
-
+  readonly  isLoading = signal(false);
   readonly name = signal('');
   readonly email = signal('');
   readonly password = signal('');
@@ -34,11 +35,17 @@ readonly #router = inject(Router);
   readonly isPasswordMatch = computed(
     () => this.password() === this.confirmPassword(),
   );
+  readonly emailAlreadyTakenError = signal<EmailAlreadyTakenError | null>(null);
+  readonly isEmailAlreadyTaken = computed(
+    () => this.emailAlreadyTakenError()?.email === this.email(),
+  );
 
   //workflow user authentication
  onSubmit() {
   // 1.infos collection(collecte donnees)
+  this.isLoading.set(true);
   const visitor: Visitor = {
+
     name: this.name(),
     email: this.email(),
     password: this.password(),
@@ -48,6 +55,13 @@ readonly #router = inject(Router);
   .then(() => {
     // 3. redirect to home page after successful registration
     this.#router.navigate(['/']);
+  })
+  .catch((error) => {
+    this.isLoading.set(false);
+    const isEmailAlreadyTaken = error instanceof EmailAlreadyTakenError;
+    if (isEmailAlreadyTaken) {
+      this.emailAlreadyTakenError.set(error);
+    }
   });
- }
+  }
 }
