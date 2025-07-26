@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '@env/environment';
-import { catchError, map, Observable,of, throwError} from 'rxjs';
+import { catchError, map, Observable, of, throwError } from 'rxjs';
 import {
   AuthenticationService,
   LoginResponse,
@@ -50,13 +50,13 @@ export class AuthenticationServiceFirebase implements AuthenticationService {
         expiresIn: response.expiresIn,
         userId: response.localId,
       })),
-          catchError(error => {
-        if(error.error.error.message === 'EMAIL_EXISTS') {
+      catchError((error) => {
+        if (error.error.error.message === 'EMAIL_EXISTS') {
           return of(new EmailAlreadyTakenError(email));
         }
 
         return throwError(() => error);
-      })
+      }),
     );
   }
 

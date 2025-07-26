@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 import { AuthenticationServiceFirebase } from './authentication-firebase.service';
 import { EmailAlreadyTakenError } from '@app/visitor/signup/email-already-taken.error';
 
-
 export type RegisterResponse = RegisterPayload | EmailAlreadyTakenError;
 export interface RegisterPayload {
   jwtToken: string;
@@ -31,6 +30,4 @@ export abstract class AuthenticationService {
   ): Observable<RegisterResponse>;
 
   abstract login(email: string, password: string): Observable<LoginResponse>;
-
-
 }

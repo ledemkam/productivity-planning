@@ -7,27 +7,33 @@ import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RegisterUserUseCaseService {
-
   readonly #authenticationService = inject(AuthenticationService);
-  readonly #userService = inject(UserService)
+  readonly #userService = inject(UserService);
   readonly #userStore = inject(UserStore);
   readonly #router = inject(Router);
 
   async execute(visitor: Visitor): Promise<void> {
     // 1. authenticate the new user
     const { name, email, password } = visitor;
-    const registerResponse = await firstValueFrom(this.#authenticationService.register( email, password ));
+    const registerResponse = await firstValueFrom(
+      this.#authenticationService.register(email, password),
+    );
 
     // Check if the registration was successful
     if (registerResponse instanceof Error) {
       throw registerResponse; // Return the error if registration failed
     }
 
-  //2. add the JWT token and email to local storage(in session storage)
-      const { userId: id, jwtToken, jwtRefreshToken, expiresIn } = registerResponse;
+    //2. add the JWT token and email to local storage(in session storage)
+    const {
+      userId: id,
+      jwtToken,
+      jwtRefreshToken,
+      expiresIn,
+    } = registerResponse;
 
     localStorage.setItem('jwtToken', jwtToken);
     localStorage.setItem('jwtRefreshToken', jwtRefreshToken);
@@ -37,11 +43,10 @@ export class RegisterUserUseCaseService {
     const user: User = {
       id,
       name,
-      email
-
+      email,
     };
     //4. Create the user in the system
-    await firstValueFrom(this.#userService.create(user,jwtToken));
+    await firstValueFrom(this.#userService.create(user, jwtToken));
 
     //5. Add the new user in app store
     this.#userStore.load(user);

@@ -22,12 +22,12 @@ import { EmailAlreadyTakenError } from './email-already-taken.error';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignupPageComponent {
-readonly store = inject(UserStore);
-readonly authenticationService = inject(AuthenticationService);
-readonly #registerUserUseCase = inject(RegisterUserUseCaseService);
-readonly #router = inject(Router);
+  readonly store = inject(UserStore);
+  readonly authenticationService = inject(AuthenticationService);
+  readonly #registerUserUseCase = inject(RegisterUserUseCaseService);
+  readonly #router = inject(Router);
 
-  readonly  isLoading = signal(false);
+  readonly isLoading = signal(false);
   readonly name = signal('');
   readonly email = signal('');
   readonly password = signal('');
@@ -41,27 +41,27 @@ readonly #router = inject(Router);
   );
 
   //workflow user authentication
- onSubmit() {
-  // 1.infos collection(collecte donnees)
-  this.isLoading.set(true);
-  const visitor: Visitor = {
-
-    name: this.name(),
-    email: this.email(),
-    password: this.password(),
-  }
-  // 2. execute the use case(traitement metier)
-  this.#registerUserUseCase.execute(visitor)
-  .then(() => {
-    // 3. redirect to home page after successful registration
-    this.#router.navigate(['/']);
-  })
-  .catch((error) => {
-    this.isLoading.set(false);
-    const isEmailAlreadyTaken = error instanceof EmailAlreadyTakenError;
-    if (isEmailAlreadyTaken) {
-      this.emailAlreadyTakenError.set(error);
-    }
-  });
+  onSubmit() {
+    // 1.infos collection(collecte donnees)
+    this.isLoading.set(true);
+    const visitor: Visitor = {
+      name: this.name(),
+      email: this.email(),
+      password: this.password(),
+    };
+    // 2. execute the use case(traitement metier)
+    this.#registerUserUseCase
+      .execute(visitor)
+      .then(() => {
+        // 3. redirect to home page after successful registration
+        this.#router.navigate(['/']);
+      })
+      .catch((error) => {
+        this.isLoading.set(false);
+        const isEmailAlreadyTaken = error instanceof EmailAlreadyTakenError;
+        if (isEmailAlreadyTaken) {
+          this.emailAlreadyTakenError.set(error);
+        }
+      });
   }
 }

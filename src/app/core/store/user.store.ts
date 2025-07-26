@@ -24,11 +24,9 @@ export const UserStore = signalStore(
 
     return { isGoogleUser };
   }),
-  withMethods(
-    (store) => ({
-      load(user: User): void {
-        patchState(store, { user });
-      }
-    })
-  ),
+  withMethods((store) => ({
+    load(user: User): void {
+      patchState(store, { user });
+    },
+  })),
 );
