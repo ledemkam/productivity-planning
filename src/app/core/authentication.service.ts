@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthenticationServiceFirebase } from './authentication-firebase.service';
+import { EmailAlreadyTakenError } from '@app/visitor/signup/email-already-taken.error';
 
-export interface RegisterResponse {
+
+export type RegisterResponse = RegisterPayload | EmailAlreadyTakenError;
+export interface RegisterPayload {
   jwtToken: string;
   jwtRefreshToken: string;
   expiresIn: string;
@@ -28,4 +31,6 @@ export abstract class AuthenticationService {
   ): Observable<RegisterResponse>;
 
   abstract login(email: string, password: string): Observable<LoginResponse>;
+
+
 }
