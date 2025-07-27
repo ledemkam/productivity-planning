@@ -7,12 +7,9 @@ import {
   signal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Visitor } from '@app/core/entity/user.interface';
-import { AuthenticationService } from '@app/core/port/authentication.service';
-import { UserStore } from '@app/core/store/user.store';
-import { RegisterUserUseCaseService } from './domain/register-user.use-case.service';
-import { EmailAlreadyTakenError } from './email-already-taken.error';
+import { EmailAlreadyTakenError } from '@app/visitor/signup/domain/email-already-taken-error';
+import { RegisterUserUseCase } from '@app/visitor/signup/domain/register-user.use-case';
 
 @Component({
   selector: 'app-signup',
@@ -22,10 +19,7 @@ import { EmailAlreadyTakenError } from './email-already-taken.error';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignupPageComponent {
-  readonly store = inject(UserStore);
-  readonly authenticationService = inject(AuthenticationService);
-  readonly #registerUserUseCase = inject(RegisterUserUseCaseService);
-  readonly #router = inject(Router);
+  readonly #registerUserUseCase = inject(RegisterUserUseCase);
 
   readonly isLoading = signal(false);
   readonly name = signal('');
@@ -50,18 +44,12 @@ export class SignupPageComponent {
       password: this.password(),
     };
     // 2. execute the use case(traitement metier)
-    this.#registerUserUseCase
-      .execute(visitor)
-      .then(() => {
-        // 3. redirect to home page after successful registration
-        this.#router.navigate(['/']);
-      })
-      .catch((error) => {
-        this.isLoading.set(false);
-        const isEmailAlreadyTaken = error instanceof EmailAlreadyTakenError;
-        if (isEmailAlreadyTaken) {
-          this.emailAlreadyTakenError.set(error);
-        }
-      });
+    this.#registerUserUseCase.execute(visitor).catch((error) => {
+      this.isLoading.set(false);
+      const isEmailAlreadyTaken = error instanceof EmailAlreadyTakenError;
+      if (isEmailAlreadyTaken) {
+        this.emailAlreadyTakenError.set(error);
+      }
+    });
   }
 }
