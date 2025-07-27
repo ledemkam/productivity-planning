@@ -4,6 +4,8 @@ import { User, Visitor } from '@app/core/entity/user.interface';
 import { UserService } from '@app/core/port/user.service';
 import { UserStore } from '@app/core/store/user.store';
 import { Router } from '@angular/router';
+import { EmailAlreadyTakenError } from '../email-already-taken.error';
+import { AuthenticationService } from '@app/core/port/authentication.service';
 
 @Injectable({
   providedIn: 'root'

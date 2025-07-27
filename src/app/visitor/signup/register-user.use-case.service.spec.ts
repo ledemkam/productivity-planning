@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { RegisterUserUseCaseService } from './register-user.use-case.service';
+import { RegisterUserUseCaseService } from './domain/register-user.use-case.service';
 
 describe('RegisterUserUseCaseService', () => {
   let service: RegisterUserUseCaseService;
