@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '@env/environment';
 import { User } from '../entity/user.interface';
 import { UserService } from '../port/user.service';
+import { environment } from '../../../environments/environment';
 
 interface UserFirebasePayload {
   fields: {

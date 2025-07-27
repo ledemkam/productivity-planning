@@ -1,11 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { UserService } from '@app/core/port/user.service';
-import { UserStore } from '@app/core/store/user.store';
+
 import { of } from 'rxjs';
 import { InvalidCredentialError } from './invalid-credential.error';
-import { AuthenticationService } from '@app/core/port/authentication.service';
 import { LoginUserUseCase } from './login-user.use-case';
+import { AuthenticationService } from '../../../core/port/authentication.service';
+import { UserService } from '../../../core/port/user.service';
+import { UserStore } from '../../../core/store/user.store';
 
 describe('LoginUserUseCaseService', () => {
   let loginUserUseCase: LoginUserUseCase;

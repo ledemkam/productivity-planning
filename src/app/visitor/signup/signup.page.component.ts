@@ -7,9 +7,10 @@ import {
   signal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Visitor } from '@app/core/entity/user.interface';
-import { EmailAlreadyTakenError } from '@app/visitor/signup/domain/email-already-taken-error';
-import { RegisterUserUseCase } from '@app/visitor/signup/domain/register-user.use-case';
+import { RegisterUserUseCase } from './domain/register-user.use-case';
+import { EmailAlreadyTakenError } from './domain/email-already-taken-error';
+import { Visitor } from '../../core/entity/user.interface';
+
 
 @Component({
   selector: 'app-signup',

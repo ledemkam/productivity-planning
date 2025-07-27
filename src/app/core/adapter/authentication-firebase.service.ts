@@ -1,13 +1,14 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { environment } from '@env/environment';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 import {
   AuthenticationService,
   LoginResponse,
   RegisterResponse,
 } from '../port/authentication.service';
-import { EmailAlreadyTakenError } from '@app/visitor/signup/domain/email-already-taken-error';
+import { environment } from '../../../environments/environment';
+import { EmailAlreadyTakenError } from '../../visitor/signup/domain/email-already-taken-error';
+
 
 interface FirebaseResponseSignupPayload {
   idToken: string;

@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { UserStore } from '@app/core/store/user.store';
+import { UserStore } from '../../core/store/user.store';
 
 @Component({
   imports: [],

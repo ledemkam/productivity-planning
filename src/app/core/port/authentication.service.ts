@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { InvalidCredentialError } from '@app/visitor/login/domain/invalid-credential.error';
 import { AuthenticationFirebaseService } from '../adapter/authentication-firebase.service';
-import { EmailAlreadyTakenError } from '@app/visitor/signup/domain/email-already-taken-error';
+import { EmailAlreadyTakenError } from '../../visitor/signup/domain/email-already-taken-error';
+import { InvalidCredentialError } from '../../visitor/login/domain/invalid-credential.error';
 
 export type RegisterResponse = RegisterPayload | EmailAlreadyTakenError;
 export type LoginResponse = LoginPayload | InvalidCredentialError;
