@@ -1,18 +1,18 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  inject,
-  signal,
-} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    computed,
+    inject,
+    signal,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AuthenticationService } from '@app/core/authentication.service';
-import { RegisterUserUseCaseService } from './register-user.use-case.service';
-import { UserStore } from '@app/core/store/user.store';
-import { Visitor } from '@app/core/entity/user.interface';
 import { Router } from '@angular/router';
+import { AuthenticationService } from '@app/core/authentication.service';
+import { Visitor } from '@app/core/entity/user.interface';
+import { UserStore } from '@app/core/store/user.store';
 import { EmailAlreadyTakenError } from './email-already-taken.error';
+import { RegisterUserUseCaseService } from './register-user.use-case.service';
 
 @Component({
   selector: 'app-signup',

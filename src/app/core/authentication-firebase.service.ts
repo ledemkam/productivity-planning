@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { EmailAlreadyTakenError } from '@app/visitor/signup/email-already-taken.error';
 import { environment } from '@env/environment';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 import {
-  AuthenticationService,
-  LoginResponse,
-  RegisterResponse,
+    AuthenticationService,
+    LoginResponse,
+    RegisterResponse,
 } from './authentication.service';
-import { EmailAlreadyTakenError } from '@app/visitor/signup/email-already-taken.error';
 
 interface FirebaseResponseSingUp {
   idToken: string;

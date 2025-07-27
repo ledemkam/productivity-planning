@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
+import { EmailAlreadyTakenError } from '@app/visitor/signup/email-already-taken.error';
 import { Observable } from 'rxjs';
 import { AuthenticationServiceFirebase } from './authentication-firebase.service';
-import { EmailAlreadyTakenError } from '@app/visitor/signup/email-already-taken.error';
 
 export type RegisterResponse = RegisterPayload | EmailAlreadyTakenError;
 export interface RegisterPayload {
