@@ -7,7 +7,7 @@ import {
     AuthenticationService,
     LoginResponse,
     RegisterResponse,
-} from '../authentication.service';
+} from '../port/authentication.service';
 
 interface FirebaseResponseSingUp {
   idToken: string;

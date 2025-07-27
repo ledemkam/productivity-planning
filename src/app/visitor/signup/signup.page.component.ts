@@ -8,8 +8,8 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '@app/core/authentication.service';
 import { Visitor } from '@app/core/entity/user.interface';
+import { AuthenticationService } from '@app/core/port/authentication.service';
 import { UserStore } from '@app/core/store/user.store';
 import { EmailAlreadyTakenError } from './email-already-taken.error';
 import { RegisterUserUseCaseService } from './register-user.use-case.service';
