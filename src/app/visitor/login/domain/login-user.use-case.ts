@@ -1,10 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
+import { AuthenticationService } from '@app/core/port/authentication.service';
+import { UserStore } from '@app/core/store/user.store';
+import { UserService } from '@app/core/port/user.service';
 import { Router } from '@angular/router';
 import { InvalidCredentialError } from './invalid-credential.error';
-import { AuthenticationService } from '../../../core/port/authentication.service';
-import { UserService } from '../../../core/port/user.service';
-import { UserStore } from '../../../core/store/user.store';
 
 @Injectable({
   providedIn: 'root',

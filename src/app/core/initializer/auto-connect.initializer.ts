@@ -1,7 +1,7 @@
 import { concatMap, Observable, tap } from 'rxjs';
-import { AuthenticationService } from '../port/authentication.service';
-import { UserService } from '../port/user.service';
-import { UserStore } from '../store/user.store';
+import { AuthenticationService } from '@app/core/port/authentication.service';
+import { UserService } from '@app/core/port/user.service';
+import { UserStore } from '@app/core/store/user.store';
 
 
 export function initializeAutoConnectFactory(

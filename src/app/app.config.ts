@@ -7,10 +7,10 @@ import {
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
-import { AuthenticationService } from './core/port/authentication.service';
-import { UserService } from './core/port/user.service';
-import { UserStore } from './core/store/user.store';
-import { initializeAutoConnectFactory } from './core/initializer/auto-connect.initializer';
+import { initializeAutoConnectFactory } from '@app/core/initializer/auto-connect.initializer';
+import { AuthenticationService } from '@app/core/port/authentication.service';
+import { UserService } from '@app/core/port/user.service';
+import { UserStore } from '@app/core/store/user.store';
 
 export const appConfig: ApplicationConfig = {
   providers: [

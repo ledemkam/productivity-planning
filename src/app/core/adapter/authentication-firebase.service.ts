@@ -6,8 +6,8 @@ import {
   LoginResponse,
   RegisterResponse,
 } from '../port/authentication.service';
-import { environment } from '../../../environments/environment';
-import { EmailAlreadyTakenError } from '../../visitor/signup/domain/email-already-taken-error';
+import { environment } from '@env/environment';
+import { EmailAlreadyTakenError } from '@app/visitor/signup/domain/email-already-taken-error';
 
 
 interface FirebaseResponseSignupPayload {
