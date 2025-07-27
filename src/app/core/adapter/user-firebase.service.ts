@@ -3,7 +3,8 @@ import { map, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../entity/user.interface';
 import { UserService } from '../port/user.service';
-import { environment } from '../../../environments/environment';
+import { environment } from '@env/environment';
+
 
 interface UserFirebasePayload {
   fields: {

@@ -7,9 +7,9 @@ import {
   signal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RegisterUserUseCase } from './domain/register-user.use-case';
-import { EmailAlreadyTakenError } from './domain/email-already-taken-error';
 import { Visitor } from '@app/core/entity/user.interface';
+import { EmailAlreadyTakenError } from './domain/email-already-taken.error';
+import { RegisterUserUseCase } from './domain/register-user.use-case';
 
 @Component({
   selector: 'app-signup',
