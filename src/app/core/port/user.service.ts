@@ -8,6 +8,6 @@ import { UserFirebaseService } from '../adapter/user-firebase.service';
   useClass: UserFirebaseService,
 })
 export abstract class UserService {
-   abstract fetch(userId: string, bearerToken: string): Observable<User>;
+  abstract fetch(userId: string, bearerToken: string): Observable<User>;
   abstract create(user: User, bearerToken: string): Observable<void>;
 }

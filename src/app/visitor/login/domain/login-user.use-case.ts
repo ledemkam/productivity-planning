@@ -7,7 +7,7 @@ import { InvalidCredentialError } from './invalid-credential.error';
 import { AuthenticationService } from '@app/core/port/authentication.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoginUserUseCase {
   readonly #authenticationService = inject(AuthenticationService);
@@ -17,10 +17,12 @@ export class LoginUserUseCase {
 
   async execute(email: string, password: string): Promise<void> {
     // 1. Authenticate existing user
-    const response = await firstValueFrom(this.#authenticationService.login(email, password));
+    const response = await firstValueFrom(
+      this.#authenticationService.login(email, password),
+    );
 
     // 2. Throw an error if credentials are invalid
-    if(response instanceof InvalidCredentialError) {
+    if (response instanceof InvalidCredentialError) {
       throw response;
     }
 
@@ -31,9 +33,10 @@ export class LoginUserUseCase {
     localStorage.setItem('jwtRefreshToken', jwtRefreshToken);
     localStorage.setItem('expiresIn', expiresIn);
 
-
     // 4. Add user in app store
-    const user = await firstValueFrom(this.#userService.fetch(userId, jwtToken));
+    const user = await firstValueFrom(
+      this.#userService.fetch(userId, jwtToken),
+    );
     this.#userStore.load(user);
 
     // 5. Redirect user to dashboard

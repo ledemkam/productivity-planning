@@ -4,11 +4,11 @@ import { User, Visitor } from '@app/core/entity/user.interface';
 import { UserService } from '@app/core/port/user.service';
 import { UserStore } from '@app/core/store/user.store';
 import { Router } from '@angular/router';
-import { EmailAlreadyTakenError } from '../email-already-taken.error';
 import { AuthenticationService } from '@app/core/port/authentication.service';
+import { EmailAlreadyTakenError } from './email-already-taken-error';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RegisterUserUseCase {
   readonly #authenticationService = inject(AuthenticationService);
@@ -16,18 +16,24 @@ export class RegisterUserUseCase {
   readonly #userStore = inject(UserStore);
   readonly #router = inject(Router);
 
-
   async execute(visitor: Visitor): Promise<void> {
     // 1. Authenticate new visitor
     const { name, email, password } = visitor;
-    const registerResponse = await firstValueFrom(this.#authenticationService.register(email, password));
+    const registerResponse = await firstValueFrom(
+      this.#authenticationService.register(email, password),
+    );
 
-    if(registerResponse instanceof EmailAlreadyTakenError) {
+    if (registerResponse instanceof EmailAlreadyTakenError) {
       throw registerResponse;
     }
 
     // 2. Add credentials information in webapp storage
-    const { userId: id, jwtToken, jwtRefreshToken, expiresIn } = registerResponse;
+    const {
+      userId: id,
+      jwtToken,
+      jwtRefreshToken,
+      expiresIn,
+    } = registerResponse;
 
     localStorage.setItem('jwtToken', jwtToken);
     localStorage.setItem('jwtRefreshToken', jwtRefreshToken);

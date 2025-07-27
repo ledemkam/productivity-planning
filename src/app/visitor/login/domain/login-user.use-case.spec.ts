@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '@app/core/port/authentication.service';
 import { UserService } from '@app/core/port/user.service';
 import { UserStore } from '@app/core/store/user.store';
 import { of } from 'rxjs';
 import { InvalidCredentialError } from './invalid-credential.error';
+import { AuthenticationService } from '@app/core/port/authentication.service';
 import { LoginUserUseCase } from './login-user.use-case';
 
 describe('LoginUserUseCaseService', () => {
@@ -31,17 +31,22 @@ describe('LoginUserUseCaseService', () => {
           {
             provide: AuthenticationService,
             useValue: {
-              login: jest.fn().mockReturnValue(of({
-                userId: mockUserId,
-                jwtToken: mockJwtToken,
-                jwtRefreshToken: mockJwtRefreshToken,
-                expiresIn: mockExpiresIn,
-              }))
-            }
+              login: jest.fn().mockReturnValue(
+                of({
+                  userId: mockUserId,
+                  jwtToken: mockJwtToken,
+                  jwtRefreshToken: mockJwtRefreshToken,
+                  expiresIn: mockExpiresIn,
+                }),
+              ),
+            },
           },
-          { provide: UserService, useValue: { fetch: jest.fn().mockReturnValue(of(mockUser)) }},
-          { provide: UserStore, useValue: { load: jest.fn() }},
-          { provide: Router, useValue: { navigate: jest.fn() }}
+          {
+            provide: UserService,
+            useValue: { fetch: jest.fn().mockReturnValue(of(mockUser)) },
+          },
+          { provide: UserStore, useValue: { load: jest.fn() } },
+          { provide: Router, useValue: { navigate: jest.fn() } },
         ],
       });
 
@@ -54,7 +59,10 @@ describe('LoginUserUseCaseService', () => {
 
     it('should authenticate the user via AuthenticationService', async () => {
       await loginUserUseCase.execute('john.doe@acme.com', 'password');
-      expect(authenticationService.login).toHaveBeenCalledWith('john.doe@acme.com', 'password');
+      expect(authenticationService.login).toHaveBeenCalledWith(
+        'john.doe@acme.com',
+        'password',
+      );
     });
 
     it('should store jwt tokens in localStorage', async () => {
@@ -89,11 +97,13 @@ describe('LoginUserUseCaseService', () => {
           {
             provide: AuthenticationService,
             useValue: {
-              login: jest.fn().mockReturnValue(of(new InvalidCredentialError()))
-            }
+              login: jest
+                .fn()
+                .mockReturnValue(of(new InvalidCredentialError())),
+            },
           },
-          { provide: UserService, useValue: { create: jest.fn() }},
-          { provide: UserStore, useValue: { register: jest.fn() }},
+          { provide: UserService, useValue: { create: jest.fn() } },
+          { provide: UserStore, useValue: { register: jest.fn() } },
         ],
       });
 
@@ -101,7 +111,9 @@ describe('LoginUserUseCaseService', () => {
     });
 
     it('should throw InvalidCredentialError', async () => {
-      await expect(loginUserUseCase.execute('john.doe@acme.com', 'wrong-password')).rejects.toThrow(InvalidCredentialError);
+      await expect(
+        loginUserUseCase.execute('john.doe@acme.com', 'wrong-password'),
+      ).rejects.toThrow(InvalidCredentialError);
     });
   });
 });
