@@ -43,8 +43,9 @@ jobs:
       # Set environment variables
       - name: Create environment file
         run: |
+          mkdir environments
           echo "Creating environment file for tests..."
-          echo "${{ secrets.ENVIRONMENT_PRODUCTION_FILE }}" > src/environments/environment.ts 
+          echo "${{ secrets.ENVIRONMENT_PRODUCTION_FILE }}" >> environments/environment.ts
 
       # Tests
       - name: Test
