@@ -18,9 +18,9 @@ describe('SignupPageComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SignupPageComponent],
-      providers: [ 
-        { 
-          provide: RegisterUserUseCase, 
+      providers: [
+        {
+          provide: RegisterUserUseCase,
           useValue: { execute: jest.fn().mockReturnValue(Promise.resolve()) } }
       ]
     })
@@ -71,7 +71,7 @@ describe('SignupPageComponent', () => {
       name.nativeElement.value = 'a';
       name.nativeElement.dispatchEvent(new Event('input'));
       fixture.detectChanges();
-  
+
       const error = fixture.debugElement.query(By.css('[data-testid="error-name-minlength"]'));
       const errorMessage = error.nativeElement.textContent;
 
@@ -82,10 +82,10 @@ describe('SignupPageComponent', () => {
       name.nativeElement.value = 'abcdefghijklmnopqrstuvwxyz';
       name.nativeElement.dispatchEvent(new Event('input'));
       fixture.detectChanges();
-  
+
       const error = fixture.debugElement.query(By.css('[data-testid="error-name-maxlength"]'));
       const errorMessage = error.nativeElement.textContent;
-      
+
       expect(errorMessage).toContain('Name must contain maximum 20 caracters.');
     });
 
@@ -93,10 +93,10 @@ describe('SignupPageComponent', () => {
       name.nativeElement.value = '!';
       name.nativeElement.dispatchEvent(new Event('input'));
       fixture.detectChanges();
-  
+
       const error = fixture.debugElement.query(By.css('[data-testid="error-name-pattern"]'));
       const errorMessage = error.nativeElement.textContent;
-      
+
       expect(errorMessage).toContain('Name must contain only letters.');
     });
   });
@@ -224,7 +224,7 @@ describe('SignupPageComponent', () => {
       // Act
       button.nativeElement.click();
       fixture.detectChanges();
-    
+
       // Assert
       expect(registerUseCase.execute).toHaveBeenCalledTimes(1);
       expect(registerUseCase.execute).toHaveBeenCalledWith({
@@ -245,7 +245,7 @@ describe('SignupPageComponent', () => {
       // Act
       button.nativeElement.click();
       fixture.detectChanges();
-    
+
       // Assert
       expect(registerUseCase.execute).not.toHaveBeenCalled();
     });
