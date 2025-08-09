@@ -21,9 +21,7 @@
           />
         </div>
         @if (nameField.dirty && nameField.hasError("required")) {
-          <div class="form-text text-danger" data-testid="error-name-required">
-            Name is required.
-          </div>
+          <div class="form-text text-danger" data-testid="error-name-required">Name is required.</div>
         }
         @if (nameField.dirty && nameField.hasError("minlength")) {
           <div class="form-text text-danger" data-testid="error-name-minlength">
