@@ -1,0 +1,1 @@
+authDomain: "productivity-planner-pro-67da3.firebaseapp.com",
