@@ -12,7 +12,7 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch --onlyChanged --verbose",
-    "test:ci":  "jest --ci",
+    "test:ci": "jest --ci",
     "lint": "ng lint",
     "format": "prettier --write .",
     "deploy:production": "npm run build:production && firebase use  production && firebase deploy",
@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^19.2.12",
-    "@angular/cli": "^19.2.12",
+    "@angular/cli": "^18.0.7",
     "@angular/compiler-cli": "^19.2.0",
     "@types/jest": "^30.0.0",
     "angular-eslint": "20.1.1",

@@ -1,6 +1,6 @@
 module.exports = {
   moduleNameMapper: {
-    '^@env/(.*)$': '<rootDir>/src/environments/$1'
+    '^@env/(.*)$': '<rootDir>/src/environments/$1',
   },
-  resolver: undefined
+  resolver: undefined,
 };

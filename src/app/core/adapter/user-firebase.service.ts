@@ -5,7 +5,6 @@ import { User } from '../entity/user.interface';
 import { UserService } from '../port/user.service';
 import { environment } from '@env/environment';
 
-
 interface UserFirebasePayload {
   fields: {
     name: { stringValue: string };

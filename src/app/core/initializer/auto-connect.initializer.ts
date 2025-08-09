@@ -3,7 +3,6 @@ import { AuthenticationService } from '@app/core/port/authentication.service';
 import { UserService } from '@app/core/port/user.service';
 import { UserStore } from '@app/core/store/user.store';
 
-
 export function initializeAutoConnectFactory(
   authenticationService: AuthenticationService,
   userService: UserService,

@@ -9,7 +9,6 @@ import {
   RegisterResponse,
 } from '../port/authentication.service';
 
-
 interface FirebaseResponseSignupPayload {
   idToken: string;
   email: string;
