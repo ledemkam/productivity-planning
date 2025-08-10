@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { provideZoneChangeDetection } from '@angular/core';
+import { provideRouter, RouterOutlet } from '@angular/router';
 import { ShellLayoutComponent } from './shell.layout.component';
 
 describe('ShellLayoutComponent', () => {
@@ -8,7 +10,8 @@ describe('ShellLayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ShellLayoutComponent]
+      imports: [ShellLayoutComponent, RouterOutlet],
+      providers: [provideZoneChangeDetection(), provideRouter([])]
     })
     .compileComponents();
 
