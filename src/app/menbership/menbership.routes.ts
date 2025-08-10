@@ -1,9 +1,9 @@
 import { Routes } from "@angular/router";
 import { DashboardPageComponent } from "./dashboard/dashboard.page.component";
 import { PlanningPageComponent } from "./planning/planning.page.component";
-import { WorkdayPageComponent } from "./workday/workday.page.component";
-import { ProfilPageComponent } from "./profil/profil.page.component";
+import { ProfilePageComponent } from "./profil/profile.page.component";
 import { SettingsPageComponent } from "./settings/settings.page.component";
+import { WorkdayPageComponent } from "./workday/workday.page.component";
 
 
 
@@ -24,9 +24,9 @@ export const membershipRoutes: Routes = [
 		component: WorkdayPageComponent,
 	},
 	{
-		path: 'profil',
+		path: 'profile',
 		title: 'Profile',
-		component: ProfilPageComponent,
+		component: ProfilePageComponent,
 	},
 	{
 		path: 'settings',
