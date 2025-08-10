@@ -7,7 +7,10 @@ import { SidebarSmartComponent } from '../sidebar/sidebar.smart.component';
   imports: [RouterOutlet,SidebarSmartComponent],
   templateUrl: './shell.layout.component.html',
   styleUrl: './shell.layout.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+    host: {
+    'class': 'shell d-flex vh-100'
+  }
 })
 export class ShellLayoutComponent {
    isSidebarCollapsed = false;
