@@ -10,5 +10,9 @@ import { SidebarSmartComponent } from '../sidebar/sidebar.smart.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShellLayoutComponent {
+   isSidebarCollapsed = false;
 
+  toggleSidebar() {
+    this.isSidebarCollapsed = !this.isSidebarCollapsed;
+  }
 }
