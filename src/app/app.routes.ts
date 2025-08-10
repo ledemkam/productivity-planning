@@ -1,52 +1,45 @@
 import { Routes } from '@angular/router';
-import { HomePageComponent } from './visitor/home/home.page.component';
-import { SignupPageComponent } from './visitor/signup/signup.page.component';
-import { LoginPageComponent } from './visitor/login/login.page.component';
-import { DashboardPageComponent } from './menbership/dashboard/dashboard.page.component';
-import { PlanningPageComponent } from './menbership/planning/planning.page.component';
-import { SettingsPageComponent } from './menbership/settings/settings.page.component';
-import { ProfilPageComponent } from './menbership/profil/profil.page.component';
-import { WorkdayPageComponent } from './menbership/workday/workday.page.component';
+
 
 export const routes: Routes = [
   {
     path: 'signup',
-    component: SignupPageComponent,
+    loadComponent: () => import('./visitor/signup/signup.page.component').then(c => c.SignupPageComponent),
     title: 'Sign Up',
   },
   {
     path: 'login',
-    component: LoginPageComponent,
+    loadComponent: () => import('./visitor/login/login.page.component').then(c => c.LoginPageComponent),
     title: 'Log In',
   },
    {
     path: 'app/dashboard',
-    component: DashboardPageComponent,
+    loadComponent: () => import('./menbership/dashboard/dashboard.page.component').then(c => c.DashboardPageComponent),
     title: 'Dashboard',
   },
    {
     path: 'app/planning',
-    component: PlanningPageComponent,
+    loadComponent: () => import('./menbership/planning/planning.page.component').then(c => c.PlanningPageComponent),
     title: 'Planning',
   },
    {
     path: 'app/profil',
-    component: ProfilPageComponent,
+    loadComponent: () => import('./menbership/profil/profil.page.component').then(c => c.ProfilPageComponent),
     title: 'Profil',
   },
    {
     path: 'app/settings',
-    component: SettingsPageComponent,
+    loadComponent: () => import('./menbership/settings/settings.page.component').then(c => c.SettingsPageComponent),
     title: 'Settings',
   },
    {
     path: 'app/workday',
-    component: WorkdayPageComponent,
+    loadComponent: () => import('./menbership/workday/workday.page.component').then(c => c.WorkdayPageComponent),
     title: 'Workday',
   },
   {
     path: '',
-    component: HomePageComponent,
+    loadComponent: () => import('./visitor/home/home.page.component').then(c => c.HomePageComponent),
     title: 'Productivity Planner',
   },
 ];
