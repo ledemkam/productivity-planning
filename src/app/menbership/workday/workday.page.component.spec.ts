@@ -8,7 +8,7 @@ describe('WorkdayPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [WorkdayPageComponent]
+      imports: [WorkdayPageComponent],
     })
     .compileComponents();
 
