@@ -14,10 +14,11 @@ type PomodoroList =
 interface Task {
   type: 'Hit the target' | 'Get things done';
   title: string;
+  pomodoroCount: 1 | 2 | 3 | 4 | 5;
   pomodoroList: PomodoroList;
 }
 
-type taskList =
+type TaskList =
   | []
   | [Task]
   | [Task, Task]
@@ -28,9 +29,19 @@ type taskList =
 
 interface WorkdayState {
   date: string;
-  taskList: taskList;
+  taskList: TaskList;
 }
 
-const initialState: WorkdayState = {};
+const initialState: WorkdayState = {
+  date: '',
+  taskList: [
+    {
+      type: 'Hit the target',
+      title: 'neue Aufgabe',
+      pomodoroCount: 1,
+      pomodoroList: [{ status: 'Not started' }],
+    },
+  ],
+};
 
 export const WorkdayStore = signalStore(withState(initialState));
