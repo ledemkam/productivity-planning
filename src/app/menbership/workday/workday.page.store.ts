@@ -44,4 +44,4 @@ const initialState: WorkdayState = {
   ],
 };
 
-export const WorkdayStore = signalStore(withState(initialState));
+export const WorkdayStore = signalStore(withState<WorkdayState>(initialState));
