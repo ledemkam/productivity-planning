@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WorkdayPageComponent } from './workday.page.component';
-import { provideZoneChangeDetection } from '@angular/core';
 
 describe('WorkdayPageComponent', () => {
   let component: WorkdayPageComponent;
@@ -10,7 +9,6 @@ describe('WorkdayPageComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [WorkdayPageComponent],
-      providers: [provideZoneChangeDetection],
     })
     .compileComponents();
 
