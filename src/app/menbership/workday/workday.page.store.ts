@@ -20,8 +20,7 @@ interface Task {
 }
 
 type TaskList =
-  | []
-  | [Task]
+   [Task]
   | [Task, Task]
   | [Task, Task, Task]
   | [Task, Task, Task, Task]
@@ -48,10 +47,10 @@ const initialState: WorkdayState = {
 export const WorkdayStore = signalStore(
   withState<WorkdayState>(initialState),
   withComputed((store) => {
-    const getMostImportantTask = computed(
+    const mostImportantTask = computed(
       () => store.taskList()[0]
     );
 
-    return { getMostImportantTask };
+    return { mostImportantTask };
   }),
 );
