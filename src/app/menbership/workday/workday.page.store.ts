@@ -1,4 +1,5 @@
-import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
+import { computed } from '@angular/core';
+import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 
 interface Pomodoro {
   status: 'Not started' | 'In progress' | 'Done';
@@ -39,13 +40,20 @@ const initialState: WorkdayState = {
 
 export const WorkdayStore = signalStore(
   withState<WorkdayState>(initialState),
+  withComputed((state) => {
+   const taskCount = computed(() => state.taskList().length);
+   const isButtonDisplayed = computed(() => taskCount());
+
+   return {
+     taskCount,
+     isButtonDisplayed
+   };
+  }),
   withMethods((store) => ({
     onAddTask() {
-
-    patchState(store,(state) => ({
-      ...state,
-      taskList: [...state.taskList, getEmptyTask()]
-    }))
+      patchState(store, (state) => ({
+        taskList: [...state.taskList, getEmptyTask()]
+      }))
     }
   }))
 );
