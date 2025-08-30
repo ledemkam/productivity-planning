@@ -38,11 +38,13 @@ const initialState: WorkdayState = {
   taskList: [getEmptyTask()],
 };
 
+const WorkDayTaskLimit = 6;
+
 export const WorkdayStore = signalStore(
   withState<WorkdayState>(initialState),
   withComputed((state) => {
    const taskCount = computed(() => state.taskList().length);
-   const isButtonDisplayed = computed(() => taskCount());
+   const isButtonDisplayed = computed(() => taskCount() < WorkDayTaskLimit);
 
    return {
      taskCount,
