@@ -15,13 +15,13 @@
 
   <!-- Tâche la plus importante -->
   @for (task of store.taskList(); track $index) {
-    @if($index === 0){
+    @if ($index === 0) {
       <h6 class="mb-3 text-muted">Most important task</h6>
     }
-    @if($index === 1){
+    @if ($index === 1) {
       <h6 class="mb-3 text-muted">Tâche de seconde importance</h6>
     }
-    @if($index === 3){
+    @if ($index === 3) {
       <h6 class="mb-3 text-muted">Tâches restantes</h6>
     }
 
@@ -31,16 +31,16 @@
           <option selected>⛳️</option>
           <option>🎯</option>
         </select>
-        <span class="flex-grow-1 fs-5">{{task.title}}</span>
+        <span class="flex-grow-1 fs-5">{{ task.title }}</span>
 
         <!-- Timer controls -->
         <div class="d-flex align-items-center ms-3">
           <select class="form-select w-auto me-3">
-              <option selected>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
+            <option selected>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
           </select>
           <button class="btn btn-sm">⏸</button>
           <button class="btn btn-sm">⏸</button>
@@ -56,6 +56,8 @@
 
   <!-- Ajouter une tâche -->
   <div class="text-center">
-    <button class="btn btn-link text-muted">Ajouter une tâche</button>
+    <button class="btn btn-link text-muted" (click)="store.onAddTask()">
+      Ajouter une tâche
+    </button>
   </div>
 </div>
