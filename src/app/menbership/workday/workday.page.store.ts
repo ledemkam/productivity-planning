@@ -13,11 +13,11 @@ type PomodoroList =
   | [Pomodoro, Pomodoro, Pomodoro, Pomodoro, Pomodoro];
 
   type TaskType = 'Hit the target' | 'Get things done';
-  type PommodoroCountType = 1 | 2 | 3 | 4 | 5;
+  type PomodoroCountType = 1 | 2 | 3 | 4 | 5;
 interface Task {
   type: TaskType;
   title: string;
-  pomodoroCount: PommodoroCountType;
+  pomodoroCount: PomodoroCountType;
   pomodoroList: PomodoroList;
 }
 
@@ -76,15 +76,15 @@ export const WorkdayStore = signalStore(
         return {taskList: updatedTaskList };
       })
     },
-    // updateTaskPomodoroCount($index:number, event: Event) {
-    //   const pomodoroCount = (event.target as HTMLSelectElement).value as PommodoroCountType;
+    updateTaskPomodoroCount($index:number, event: Event) {
+      const pomodoroCount = Number((event.target as HTMLSelectElement).value) as PomodoroCountType;
 
-    //   patchState(store, (state) => {
-    //     const taskToUpdate = { ...state.taskList[$index], pomodoroCount};
-    //     const updatedTaskList = state.taskList.toSpliced($index, 1, taskToUpdate);
-    //     return {taskList: updatedTaskList };
-    //   })
-    // }
+      patchState(store, (state) => {
+        const taskToUpdate = { ...state.taskList[$index], pomodoroCount};
+        const updatedTaskList = state.taskList.toSpliced($index, 1, taskToUpdate);
+        return {taskList: updatedTaskList };
+      })
+    }
 
 
   }))
