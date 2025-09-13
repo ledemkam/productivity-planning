@@ -12,10 +12,12 @@ type PomodoroList =
   | [Pomodoro, Pomodoro, Pomodoro, Pomodoro]
   | [Pomodoro, Pomodoro, Pomodoro, Pomodoro, Pomodoro];
 
+  type TaskType = 'Hit the target' | 'Get things done';
+  type PomodoroCountType = 1 | 2 | 3 | 4 | 5;
 interface Task {
-  type: 'Hit the target' | 'Get things done';
+  type: TaskType;
   title: string;
-  pomodoroCount: 1 | 2 | 3 | 4 | 5;
+  pomodoroCount: PomodoroCountType;
   pomodoroList: PomodoroList;
 }
 
@@ -25,9 +27,8 @@ interface WorkdayState {
   date: string;
   taskList: TaskList;
 }
-
 const getEmptyTask = (): Task => ({
-  type: 'Hit the target',
+  type: 'Hit the target' ,
   title: 'neue Aufgabe',
   pomodoroCount: 1,
   pomodoroList: [{ status: 'Not started' }],
@@ -56,6 +57,43 @@ export const WorkdayStore = signalStore(
       patchState(store, (state) => ({
         taskList: [...state.taskList, getEmptyTask()]
       }))
+    },
+    updateDate(event: Event): void {
+      const date: string = (event.target as HTMLInputElement).value;
+      patchState(store, () => ({
+        date
+      }))
+    },
+    updateTaskType($index:number, event: Event) : void {
+      const type: TaskType = (event.target as HTMLSelectElement).value as TaskType;
+
+      patchState(store, (state) => {
+        const taskToUpdate = { ...state.taskList[$index], type};
+        const updatedTaskList = state.taskList.toSpliced($index, 1, taskToUpdate);
+        return {taskList: updatedTaskList };
+      })
+    },
+    updateTaskTitle($index:number, event: Event): void {
+      const title: string = (event.target as HTMLInputElement).value;
+
+      patchState(store, (state) => {
+        const taskToUpdate = { ...state.taskList[$index], title};
+        const updatedTaskList = state.taskList.toSpliced($index, 1, taskToUpdate);
+        return {taskList: updatedTaskList };
+      })
+    },
+    updateTaskPomodoroCount($index:number, event: Event): void {
+      const pomodoroCount: PomodoroCountType = Number((event.target as HTMLSelectElement).value) as PomodoroCountType;
+
+      patchState(store, (state) => {
+        const taskToUpdate = { ...state.taskList[$index], pomodoroCount};
+        const updatedTaskList = state.taskList.toSpliced($index, 1, taskToUpdate);
+        return {taskList: updatedTaskList };
+      })
     }
+
+
+
+
   }))
 );
