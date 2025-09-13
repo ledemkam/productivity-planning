@@ -12,8 +12,9 @@ type PomodoroList =
   | [Pomodoro, Pomodoro, Pomodoro, Pomodoro]
   | [Pomodoro, Pomodoro, Pomodoro, Pomodoro, Pomodoro];
 
+  type TaskType = 'Hit the target' | 'Get things done';
 interface Task {
-  type: 'Hit the target' | 'Get things done';
+  type: TaskType;
   title: string;
   pomodoroCount: 1 | 2 | 3 | 4 | 5;
   pomodoroList: PomodoroList;
@@ -25,9 +26,8 @@ interface WorkdayState {
   date: string;
   taskList: TaskList;
 }
-
 const getEmptyTask = (): Task => ({
-  type: 'Hit the target',
+  type: 'Hit the target' ,
   title: 'neue Aufgabe',
   pomodoroCount: 1,
   pomodoroList: [{ status: 'Not started' }],
@@ -56,6 +56,13 @@ export const WorkdayStore = signalStore(
       patchState(store, (state) => ({
         taskList: [...state.taskList, getEmptyTask()]
       }))
+    },
+    updateTaskType($index:number, type: TaskType) {
+      patchState(store, (state) => {
+        const taskToUpdate = { ...state.taskList[$index], type };
+        const updatedTaskList = state.taskList.toSpliced($index, 1, taskToUpdate);
+        return { ...state, taskList: updatedTaskList };
+      })
     }
   }))
 );
