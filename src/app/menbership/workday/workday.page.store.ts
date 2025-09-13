@@ -13,10 +13,11 @@ type PomodoroList =
   | [Pomodoro, Pomodoro, Pomodoro, Pomodoro, Pomodoro];
 
   type TaskType = 'Hit the target' | 'Get things done';
+  type PommodoroCountType = 1 | 2 | 3 | 4 | 5;
 interface Task {
   type: TaskType;
   title: string;
-  pomodoroCount: 1 | 2 | 3 | 4 | 5;
+  pomodoroCount: PommodoroCountType;
   pomodoroList: PomodoroList;
 }
 
@@ -58,13 +59,33 @@ export const WorkdayStore = signalStore(
       }))
     },
     updateTaskType($index:number, event: Event) {
-      const value = (event.target as HTMLSelectElement).value as TaskType;
+      const type = (event.target as HTMLSelectElement).value as TaskType;
 
       patchState(store, (state) => {
-        const taskToUpdate = { ...state.taskList[$index], type: value};
+        const taskToUpdate = { ...state.taskList[$index], type};
         const updatedTaskList = state.taskList.toSpliced($index, 1, taskToUpdate);
         return {taskList: updatedTaskList };
       })
-    }
+    },
+    updateTaskTitle($index:number, event: Event) {
+      const title = (event.target as HTMLInputElement).value;
+
+      patchState(store, (state) => {
+        const taskToUpdate = { ...state.taskList[$index], title};
+        const updatedTaskList = state.taskList.toSpliced($index, 1, taskToUpdate);
+        return {taskList: updatedTaskList };
+      })
+    },
+    // updateTaskPomodoroCount($index:number, event: Event) {
+    //   const pomodoroCount = (event.target as HTMLSelectElement).value as PommodoroCountType;
+
+    //   patchState(store, (state) => {
+    //     const taskToUpdate = { ...state.taskList[$index], pomodoroCount};
+    //     const updatedTaskList = state.taskList.toSpliced($index, 1, taskToUpdate);
+    //     return {taskList: updatedTaskList };
+    //   })
+    // }
+
+
   }))
 );

@@ -33,7 +33,7 @@
           <option selected value="Hit the target">⛳️</option>
           <option value="Get things done">🎯</option>
         </select>
-        <span class="flex-grow-1 fs-5">{{ task.title }}</span>
+        <input class="flex-grow-1 fs-5" [value]="task.title" (input)="store.updateTaskTitle($index, $event)" />
 
         <!-- Timer controls -->
         <div class="d-flex align-items-center ms-3">
