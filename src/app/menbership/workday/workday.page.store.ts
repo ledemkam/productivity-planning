@@ -58,8 +58,14 @@ export const WorkdayStore = signalStore(
         taskList: [...state.taskList, getEmptyTask()]
       }))
     },
-    updateTaskType($index:number, event: Event) {
-      const type = (event.target as HTMLSelectElement).value as TaskType;
+    updateDate(event: Event): void {
+      const date: string = (event.target as HTMLInputElement).value;
+      patchState(store, () => ({
+        date
+      }))
+    },
+    updateTaskType($index:number, event: Event) : void {
+      const type: TaskType = (event.target as HTMLSelectElement).value as TaskType;
 
       patchState(store, (state) => {
         const taskToUpdate = { ...state.taskList[$index], type};
@@ -67,8 +73,8 @@ export const WorkdayStore = signalStore(
         return {taskList: updatedTaskList };
       })
     },
-    updateTaskTitle($index:number, event: Event) {
-      const title = (event.target as HTMLInputElement).value;
+    updateTaskTitle($index:number, event: Event): void {
+      const title: string = (event.target as HTMLInputElement).value;
 
       patchState(store, (state) => {
         const taskToUpdate = { ...state.taskList[$index], title};
@@ -76,8 +82,8 @@ export const WorkdayStore = signalStore(
         return {taskList: updatedTaskList };
       })
     },
-    updateTaskPomodoroCount($index:number, event: Event) {
-      const pomodoroCount = Number((event.target as HTMLSelectElement).value) as PomodoroCountType;
+    updateTaskPomodoroCount($index:number, event: Event): void {
+      const pomodoroCount: PomodoroCountType = Number((event.target as HTMLSelectElement).value) as PomodoroCountType;
 
       patchState(store, (state) => {
         const taskToUpdate = { ...state.taskList[$index], pomodoroCount};
@@ -85,6 +91,8 @@ export const WorkdayStore = signalStore(
         return {taskList: updatedTaskList };
       })
     }
+
+
 
 
   }))
