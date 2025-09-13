@@ -29,9 +29,9 @@
 
     <div class="card p-3 mb-3">
       <div class="d-flex align-items-center">
-        <select class="form-select w-auto me-3">
-          <option selected>⛳️</option>
-          <option>🎯</option>
+        <select class="form-select w-auto me-3" (change)="store.updateTaskType($index, $event)">
+          <option selected value="Hit the target">⛳️</option>
+          <option value="Get things done">🎯</option>
         </select>
         <span class="flex-grow-1 fs-5">{{ task.title }}</span>
 

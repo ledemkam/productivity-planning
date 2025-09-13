@@ -57,11 +57,13 @@ export const WorkdayStore = signalStore(
         taskList: [...state.taskList, getEmptyTask()]
       }))
     },
-    updateTaskType($index:number, type: TaskType) {
+    updateTaskType($index:number, event: Event) {
+      const value = (event.target as HTMLSelectElement).value as TaskType;
+
       patchState(store, (state) => {
-        const taskToUpdate = { ...state.taskList[$index], type };
+        const taskToUpdate = { ...state.taskList[$index], type: value};
         const updatedTaskList = state.taskList.toSpliced($index, 1, taskToUpdate);
-        return { ...state, taskList: updatedTaskList };
+        return {taskList: updatedTaskList };
       })
     }
   }))
