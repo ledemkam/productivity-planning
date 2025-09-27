@@ -13,6 +13,14 @@
     </div>
   </div>
 
+  <!-- Afficher un message si la liste des tâches est vide -->
+  @if (store.taskList().length === 0) {
+    <div class="text-center my-5">
+      <div class="mb-3" style="font-size: 4rem; opacity: 0.6;">📋</div>
+      <h5 class="text-muted">Rien de prévu pour aujourd'hui !</h5>
+    </div>
+  }@else{
+
   <!-- Tâche la plus importante -->
   @for (task of store.taskList(); track $index) {
     @if ($index === 0) {
@@ -60,7 +68,7 @@
       </div>
     </div>
   }
-
+  }
   <!-- Ajouter une tâche -->
   <div class="text-center">
     @if (store.isButtonDisplayed()) {
