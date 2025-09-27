@@ -59,10 +59,11 @@ export const WorkdayStore = signalStore(
       }))
     },
     removeTask($index: number): void {
-      patchState(store, (state) => ({
-        taskList: state.taskList.filter((_, index) => index !== $index)
-      }));
-    },
+      patchState(store, (state) => {
+    const removeTaskList = state.taskList.toSpliced($index, 1);
+    return { taskList: removeTaskList };
+  });
+},
     updateDate(event: Event): void {
       const date: string = (event.target as HTMLInputElement).value;
       patchState(store, () => ({
