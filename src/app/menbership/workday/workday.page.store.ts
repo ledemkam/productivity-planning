@@ -90,6 +90,12 @@ export const WorkdayStore = signalStore(
         const updatedTaskList = state.taskList.toSpliced($index, 1, taskToUpdate);
         return {taskList: updatedTaskList };
       })
+    },
+    removeTask($index: number): void {
+      patchState(store, (state) => {
+        const removeTaskList = state.taskList.toSpliced($index, 1);
+        return { taskList: removeTaskList };
+      });
     }
 
 
