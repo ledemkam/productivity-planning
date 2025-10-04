@@ -47,13 +47,8 @@
             <option value="Get things done">⛳️</option>
             <option selected value="Hit the target">🎯</option>
           </select>
-          <input
-            data-test="task-input"
-            class="form-control flex fs-5"
-            [value]="task.title"
-            (input)="store.updateTaskTitle($index, $event)"
-            [attr.data-testid]="`task-input-${$index}`"
-          />
+         <input class="form-control flex-grow-1 fs-5 border-0" [value]="task.title"
+        (input)="store.updateTaskTitle($index, $event)" [attr.data-testid]="`task-input-${$index}`" />
 
           <!-- Timer controls -->
           <div class="d-flex align-items-center ms-3">
@@ -77,7 +72,6 @@
           </div>
           <!-- Icône de suppression -->
           <button
-            data-test="remove-task-button"
             class="btn btn-link text-muted ms-3"
             [attr.data-testid]="`task-remove-${$index}`"
             (click)="store.removeTask($index)"
@@ -92,7 +86,7 @@
   <div class="text-center">
     @if (store.isButtonDisplayed()) {
       <button
-        data-test="add-task-button"
+        data-testid="add-task-button"
         class="btn btn-link text-muted"
         (click)="store.onAddTask()"
       >

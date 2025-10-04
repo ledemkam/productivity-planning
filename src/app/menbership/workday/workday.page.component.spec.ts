@@ -8,7 +8,7 @@ describe('WorkdayPageComponent', () => {
   let fixture: ComponentFixture<WorkdayPageComponent>;
 
   const getAddTaskButton = () =>
-    fixture.nativeElement.querySelector('[data-testid=add-task-button]');
+   fixture.debugElement.query(By.css('[data-testid="add-task-button"]'));
 
   /* Get task by position instead of index: getTask(1) <=> task at index 0. */
   const getTask = (id: number) =>
@@ -41,7 +41,7 @@ describe('WorkdayPageComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('when workday page loads', () => {
+  describe('when workday page load', () => {
     it('should display one task', () => {
       expect(getTask(1)).toBeTruthy();
       expect(getTask(2)).toBeNull();
@@ -85,11 +85,12 @@ describe('WorkdayPageComponent', () => {
 
     beforeEach(() => {
 
-      component.store.onAddTask();
-      component.store.onAddTask();
-      component.store.onAddTask();
-      component.store.onAddTask();
-      component.store.onAddTask();
+      const button = getAddTaskButton();
+      button.nativeElement.click();
+      button.nativeElement.click();
+      button.nativeElement.click();
+      button.nativeElement.click();
+      button.nativeElement.click();
       fixture.detectChanges();
     });
     it('should display the "add task" button', () => {
