@@ -4,7 +4,13 @@
     <div class="col-md-4"></div>
     <div class="col-md-4 text-center">
       <h6 class="mb-2">Working Day</h6>
-      <input type="date" class="form-control" [value]="store.date()" (change)="store.updateDate($event)"  />
+      <input
+        data-test="date-input"
+        type="date"
+        class="form-control"
+        [value]="store.date()"
+        (change)="store.updateDate($event)"
+      />
     </div>
     <div class="col-md-4 text-end mt-3 mt-md-0">
       <button class="btn btn-success rounded-pill px-4 py-2 fw-bold">
@@ -16,61 +22,80 @@
   <!-- Afficher un message si la liste des tâches est vide -->
   @if (store.taskList().length === 0) {
     <div class="text-center my-5">
-      <div class="mb-3" style="font-size: 4rem; opacity: 0.6;">📋</div>
+      <div class="mb-3" style="font-size: 4rem; opacity: 0.6">📋</div>
       <h5 class="text-muted">Rien de prévu pour aujourd'hui !</h5>
     </div>
-  }@else{
+  } @else {
+    <!-- Tâche la plus importante -->
+    @for (task of store.taskList(); track $index) {
+      @if ($index === 0) {
+        <h6 class="mb-3 text-muted">Most important task</h6>
+      }
+      @if ($index === 1) {
+        <h6 class="mb-3 text-muted">Tâche de seconde importance</h6>
+      }
+      @if ($index === 3) {
+        <h6 class="mb-3 text-muted">Tâches restantes</h6>
+      }
 
-  <!-- Tâche la plus importante -->
-  @for (task of store.taskList(); track $index) {
-    @if ($index === 0) {
-      <h6 class="mb-3 text-muted">Most important task</h6>
-    }
-    @if ($index === 1) {
-      <h6 class="mb-3 text-muted">Tâche de seconde importance</h6>
-    }
-    @if ($index === 3) {
-      <h6 class="mb-3 text-muted">Tâches restantes</h6>
-    }
-
-
-    <div class="card p-3 mb-3">
-      <div class="d-flex align-items-center">
-        <select class="form-select w-auto me-3" (change)="store.updateTaskType($index, $event)">
-          <option selected value="Hit the target">⛳️</option>
-          <option value="Get things done">🎯</option>
-        </select>
-        <input class="flex-grow-1 fs-5" [value]="task.title" (input)="store.updateTaskTitle($index, $event)" />
-
-        <!-- Timer controls -->
-        <div class="d-flex align-items-center ms-3">
-          <select class="form-select w-auto me-3" (change)="store.updateTaskPomodoroCount($index, $event)">
-            <option selected value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
+      <div class="card p-3 mb-3" [attr.data-testid]="`task-${$index}`">
+        <div class="d-flex align-items-center">
+          <select
+            class="form-select w-auto me-3"
+            (change)="store.updateTaskType($index, $event)"
+          >
+            <option value="Get things done">⛳️</option>
+            <option selected value="Hit the target">🎯</option>
           </select>
-          <button class="btn btn-sm">⏸</button>
-          <button class="btn btn-sm">⏸</button>
-          <button class="btn btn-sm">⏸</button>
-          <button class="btn btn-sm">⏸</button>
-          <button class="btn btn-sm">⏸</button>
-          <span class="mx-3 fs-5">0</span>
-          <span>🏁</span>
+          <input
+            data-test="task-input"
+            class="form-control flex fs-5"
+            [value]="task.title"
+            (input)="store.updateTaskTitle($index, $event)"
+            [attr.data-testid]="`task-input-${$index}`"
+          />
+
+          <!-- Timer controls -->
+          <div class="d-flex align-items-center ms-3">
+            <select
+              class="form-select w-auto me-3"
+              (change)="store.updateTaskPomodoroCount($index, $event)"
+            >
+              <option selected value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+            <button class="btn btn-sm">⏸</button>
+            <button class="btn btn-sm">⏸</button>
+            <button class="btn btn-sm">⏸</button>
+            <button class="btn btn-sm">⏸</button>
+            <button class="btn btn-sm">⏸</button>
+            <span class="mx-3 fs-5">0</span>
+            <span>🏁</span>
+          </div>
+          <!-- Icône de suppression -->
+          <button
+            data-test="remove-task-button"
+            class="btn btn-link text-muted ms-3"
+            [attr.data-testid]="`task-remove-${$index}`"
+            (click)="store.removeTask($index)"
+          >
+            ✕
+          </button>
         </div>
-         <!-- Icône de suppression -->
-        <button class="btn btn-sm text-muted ms-3" (click)="store.removeTask($index)">
-          ✕
-        </button>
       </div>
-    </div>
-  }
+    }
   }
   <!-- Ajouter une tâche -->
   <div class="text-center">
     @if (store.isButtonDisplayed()) {
-      <button class="btn btn-link text-muted" (click)="store.onAddTask()">
+      <button
+        data-test="add-task-button"
+        class="btn btn-link text-muted"
+        (click)="store.onAddTask()"
+      >
         Ajouter une tâche
       </button>
     }
