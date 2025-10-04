@@ -58,6 +58,11 @@ export const WorkdayStore = signalStore(
         taskList: [...state.taskList, getEmptyTask()]
       }))
     },
+    removeTask($index: number) {
+      patchState(store, (state) => ({
+        taskList: state.taskList.toSpliced($index, 1),
+      }));
+    },
     updateDate(event: Event): void {
       const date: string = (event.target as HTMLInputElement).value;
       patchState(store, () => ({
@@ -90,10 +95,7 @@ export const WorkdayStore = signalStore(
         const updatedTaskList = state.taskList.toSpliced($index, 1, taskToUpdate);
         return {taskList: updatedTaskList };
       })
-    }
-
-
-
+    },
 
   }))
 );
