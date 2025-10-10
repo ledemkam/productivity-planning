@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WorkdayPageComponent } from './workday.page.component';
 import { By } from '@angular/platform-browser';
+import { WorkdayPageComponent } from './workday.page.component';
 
 describe('WorkdayPageComponent', () => {
   let component: WorkdayPageComponent;
@@ -9,6 +9,9 @@ describe('WorkdayPageComponent', () => {
 
   const getAddTaskButton = () =>
    fixture.debugElement.query(By.css('[data-testid="add-task-button"]'));
+
+  const getStartWorkDayButton = () =>
+    fixture.debugElement.query(By.css('.btn-success'));
 
   /* Get task by position instead of index: getTask(1) <=> task at index 0. */
   const getTask = (id: number) =>
@@ -48,6 +51,10 @@ describe('WorkdayPageComponent', () => {
     });
     it('should display  "add task" button', () => {
       const button = getAddTaskButton();
+      expect(button).toBeTruthy();
+    });
+    it('should display "Start the work day" button when there are tasks', () => {
+      const button = getStartWorkDayButton();
       expect(button).toBeTruthy();
     });
   });
@@ -96,6 +103,24 @@ describe('WorkdayPageComponent', () => {
     it('should display the "add task" button', () => {
       const button = getAddTaskButton();
       expect(button).toBeNull();
+    });
+  });
+
+  describe('when there are no tasks', () => {
+    beforeEach(() => {
+      // Remove the default task that is created on component initialization
+      getRemoveTaskButton(1).nativeElement.click();
+      fixture.detectChanges();
+    });
+
+    it('should hide "Start the work day" button', () => {
+      const button = getStartWorkDayButton();
+      expect(button).toBeNull();
+    });
+
+    it('should display empty state message', () => {
+      const emptyMessage = fixture.debugElement.query(By.css('.text-muted'));
+      expect(emptyMessage.nativeElement.textContent.trim()).toBe('Rien de prévu pour aujourd\'hui !');
     });
   });
 });
