@@ -13,9 +13,11 @@
       />
     </div>
     <div class="col-md-4 text-end mt-3 mt-md-0">
-      <button class="btn btn-success rounded-pill px-4 py-2 fw-bold">
-        Start the work day
-      </button>
+      @if (store.taskList().length > 0) {
+        <button class="btn btn-success rounded-pill px-4 py-2 fw-bold">
+          Start the work day
+        </button>
+      }
     </div>
   </div>
 
