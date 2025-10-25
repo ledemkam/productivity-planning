@@ -1,23 +1,26 @@
 import { computed } from '@angular/core';
-import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
+import {
+  patchState,
+  signalStore,
+  withComputed,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
 
 interface Pomodoro {
   status: 'Not started' | 'In progress' | 'Done';
+  currentTime: number;
+  duration: number;
+  isCompleted: boolean;
 }
 
-type PomodoroList =
-  | [Pomodoro]
-  | [Pomodoro, Pomodoro]
-  | [Pomodoro, Pomodoro, Pomodoro]
-  | [Pomodoro, Pomodoro, Pomodoro, Pomodoro]
-  | [Pomodoro, Pomodoro, Pomodoro, Pomodoro, Pomodoro];
-
-  type TaskType = 'Hit the target' | 'Get things done';
-  type PomodoroCountType = 1 | 2 | 3 | 4 | 5;
-interface Task {
+type PomodoroList = Pomodoro[];
+export type TaskType = 'Hit the target' | 'Get things done';
+export type PomodoroCount = 1 | 2 | 3 | 4 | 5;
+export interface Task {
   type: TaskType;
   title: string;
-  pomodoroCount: PomodoroCountType;
+  pomodoroCount: PomodoroCount;
   pomodoroList: PomodoroList;
 }
 
@@ -27,75 +30,65 @@ interface WorkdayState {
   date: string;
   taskList: TaskList;
 }
+
 const getEmptyTask = (): Task => ({
-  type: 'Hit the target' ,
-  title: 'neue Aufgabe',
+  type: 'Hit the target',
+  title: 'Nouvelle tâche',
   pomodoroCount: 1,
-  pomodoroList: [{ status: 'Not started' }],
+  pomodoroList: [
+    {
+      status: 'Not started',
+      currentTime: 0,
+      duration: 1500,
+      isCompleted: false,
+    },
+  ],
 });
 
-const initialState: WorkdayState = {
-  date: '',
-  taskList: [getEmptyTask()],
-};
-
-const WorkDayTaskLimit = 6;
+const WORKDAY_TASK_LIMIT = 6;
 
 export const WorkdayStore = signalStore(
-  withState<WorkdayState>(initialState),
+  withState<WorkdayState>({
+    date: '2019-02-28',
+    taskList: [getEmptyTask()],
+  }),
   withComputed((state) => {
-   const taskCount = computed(() => state.taskList().length);
-   const isButtonDisplayed = computed(() => taskCount() < WorkDayTaskLimit);
+    const taskCount = computed(() => state.taskList().length);
+    const isButtonDisplayed = computed(() => taskCount() < WORKDAY_TASK_LIMIT);
+    const hasNoTaskPlanned = computed(() => taskCount() === 0);
+    const hasTaskPlanned = computed(() => taskCount() > 0);
 
-   return {
-     taskCount,
-     isButtonDisplayed
-   };
+    return {
+      taskCount,
+      isButtonDisplayed,
+      hasNoTaskPlanned,
+      hasTaskPlanned,
+    };
   }),
   withMethods((store) => ({
-    onAddTask() {
+    addTask() {
       patchState(store, (state) => ({
-        taskList: [...state.taskList, getEmptyTask()]
-      }))
+        taskList: [...state.taskList, getEmptyTask()],
+      }));
     },
     removeTask($index: number) {
       patchState(store, (state) => ({
         taskList: state.taskList.toSpliced($index, 1),
       }));
     },
-    updateDate(event: Event): void {
-      const date: string = (event.target as HTMLInputElement).value;
-      patchState(store, () => ({
-        date
-      }))
+    updateDate(event: Event) {
+      const date = (event.target as HTMLInputElement).value;
+      patchState(store, () => ({ date }));
     },
-    updateTaskType($index:number, event: Event) : void {
-      const type: TaskType = (event.target as HTMLSelectElement).value as TaskType;
-
+    updateTask(index: number, updatedTask: Task) {
       patchState(store, (state) => {
-        const taskToUpdate = { ...state.taskList[$index], type};
-        const updatedTaskList = state.taskList.toSpliced($index, 1, taskToUpdate);
-        return {taskList: updatedTaskList };
-      })
+        const taskList: TaskList = state.taskList.toSpliced(
+          index,
+          1,
+          updatedTask
+        );
+        return { taskList };
+      });
     },
-    updateTaskTitle($index:number, event: Event): void {
-      const title: string = (event.target as HTMLInputElement).value;
-
-      patchState(store, (state) => {
-        const taskToUpdate = { ...state.taskList[$index], title};
-        const updatedTaskList = state.taskList.toSpliced($index, 1, taskToUpdate);
-        return {taskList: updatedTaskList };
-      })
-    },
-    updateTaskPomodoroCount($index:number, event: Event): void {
-      const pomodoroCount: PomodoroCountType = Number((event.target as HTMLSelectElement).value) as PomodoroCountType;
-
-      patchState(store, (state) => {
-        const taskToUpdate = { ...state.taskList[$index], pomodoroCount};
-        const updatedTaskList = state.taskList.toSpliced($index, 1, taskToUpdate);
-        return {taskList: updatedTaskList };
-      })
-    },
-
   }))
 );
