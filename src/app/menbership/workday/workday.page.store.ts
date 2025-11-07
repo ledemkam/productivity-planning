@@ -29,6 +29,8 @@ type TaskList = Task[];
 interface WorkdayState {
   date: string;
   taskList: TaskList;
+  progress: number;
+  mode: "edit" | "execution"
 }
 
 const getEmptyTask = (): Task => ({
@@ -51,18 +53,24 @@ export const WorkdayStore = signalStore(
   withState<WorkdayState>({
     date: '2019-02-28',
     taskList: [getEmptyTask()],
+    progress: 0,
+    mode: "edit"
   }),
   withComputed((state) => {
     const taskCount = computed(() => state.taskList().length);
     const isButtonDisplayed = computed(() => taskCount() < WORKDAY_TASK_LIMIT);
     const hasNoTaskPlanned = computed(() => taskCount() === 0);
     const hasTaskPlanned = computed(() => taskCount() > 0);
+    const isEditmode = computed(() => state.mode() === 'edit')
+    const isExecutionMode = computed(() => state.mode() === 'execution')
 
     return {
       taskCount,
       isButtonDisplayed,
       hasNoTaskPlanned,
       hasTaskPlanned,
+      isEditmode,
+      isExecutionMode
     };
   }),
   withMethods((store) => ({
