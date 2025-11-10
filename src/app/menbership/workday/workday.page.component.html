@@ -1,44 +1,60 @@
 <div class="container my-5">
+  <!-- Header avec date centrée et bouton à droite -->
+   <pre>{{store.mode()}}</pre>
   <div class="row align-items-center mb-4">
     <div class="col-md-4"></div>
     <div class="col-md-4 text-center">
       <h6 class="mb-2">Working Day</h6>
-      <input type="date" class="form-control" [value]="store.date()" (change)="store.updateDate($event)" />
+      <input
+        data-test="date-input"
+        type="date"
+        class="form-control"
+        [value]="store.date()"
+        (change)="store.updateDate($event)"
+      />
     </div>
-    @if(store.hasTaskPlanned()) {
-    <div class="col-md-4 text-end mt-3 mt-md-0" data-testid="start-workday-button">
-      <button class="btn btn-success rounded-pill px-4 py-2 fw-bold">
-        Start the work day
-      </button>
-    </div>
+    @if (store.hasTaskPlanned() && store.isEditmode()) {
+    <div class="col-md-4 text-end mt-3 mt-md-0" data-test="start-workday-button">
+        <button class="btn btn-success rounded-pill px-4 py-2 fw-bold">
+          Start the work day
+        </button>
+      </div>
     }
   </div>
 
-  @if(store.hasNoTaskPlanned()) {
-    <div class="text-center my-5">
+  <!-- Afficher un message si la liste des tâches est vide -->
+  @if (store.hasNoTaskPlanned()) {
+    <div class="text-center my-5" data-testid="inbox-zero-placeholder">
       <div class="mb-3" style="font-size: 4rem; opacity: 0.6">📋</div>
       <h5 class="text-muted">Rien de prévu pour aujourd'hui !</h5>
     </div>
-  }
+  } @else {
+    <!-- Tâche la plus importante -->
+    @for (task of store.taskList(); track $index) {
+      @if ($index === 0) {
+        <h6 class="mb-3 text-muted">Most important task</h6>
+      }
+      @if ($index === 1) {
+        <h6 class="mb-3 text-muted">Tâche de seconde importance</h6>
+      }
+      @if ($index === 3) {
+        <h6 class="mb-3 text-muted">Tâches restantes</h6>
+      }
 
-  @for(task of store.taskList(); track $index) {
-  @if($index === 0) {
-  <h6 class="mb-3 text-muted">Most important task</h6>
-  }
-  @if($index === 1) {
-  <h6 class="mb-3 text-muted">Tâches de seconde importance</h6>
-  }
-  @if($index === 3) {
-  <h6 class="mb-3 text-muted">Tâches restantes</h6>
-  }
-   <app-taskfield [task]="task" [index]="$index" (taskUpdated)="store.updateTask($index,$event)"
+      <app-taskfield [task]="task" [index]="$index" (taskUpdated)="store.updateTask($index,$event)"
         (taskRemoved)="store.removeTask($index)"/>
+    }
   }
-
+  <!-- Ajouter une tâche -->
   <div class="text-center">
-    @if(store.isButtonDisplayed()) {
-    <button data-testid="add-task-button" class="btn btn-link text-muted" (click)="store.addTask()">Ajouter une
-      tâche</button>
+    @if (store.isButtonDisplayed()) {
+      <button
+        data-testid="add-task-button"
+        class="btn btn-link text-muted"
+        (click)="store.addTask()"
+      >
+        Ajouter une tâche
+      </button>
     }
   </div>
 </div>

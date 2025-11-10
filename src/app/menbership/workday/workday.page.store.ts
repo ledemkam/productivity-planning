@@ -54,7 +54,7 @@ export const WorkdayStore = signalStore(
     date: '2019-02-28',
     taskList: [getEmptyTask()],
     progress: 0,
-    mode: "edit"
+    mode: "edit" 
   }),
   withComputed((state) => {
     const taskCount = computed(() => state.taskList().length);
