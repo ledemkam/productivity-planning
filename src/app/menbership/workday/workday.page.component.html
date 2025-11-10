@@ -1,6 +1,6 @@
 <div class="container my-5">
   <!-- Header avec date centrée et bouton à droite -->
-   <pre>{{store.mode()}}</pre>
+  <pre>{{ store.mode() }}</pre>
   <div class="row align-items-center mb-4">
     <div class="col-md-4"></div>
     <div class="col-md-4 text-center">
@@ -12,10 +12,37 @@
         [value]="store.date()"
         (change)="store.updateDate($event)"
       />
+      @if (store.isExecutionMode()) {
+        <div class="d-flex flex-column align-items-center mt-2">
+          <div
+            class="progress w-100"
+            style="height: 1rem"
+            data-testid="worday-progress"
+          >
+            <div
+              class="progress-bar bg-success"
+              role="progressbar"
+              [style.width.%]="store.progress()"
+              [attr.aria-valuenow]="store.progress()"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            >
+              {{ store.progress() }}%
+            </div>
+          </div>
+          <p class="text-muted small text-center w-100">{{store.progress()}} secondes have passed.</p>
+        </div>
+      }
     </div>
     @if (store.hasTaskPlanned() && store.isEditmode()) {
-    <div class="col-md-4 text-end mt-3 mt-md-0" data-test="start-workday-button">
-        <button class="btn btn-success rounded-pill px-4 py-2 fw-bold">
+      <div
+        class="col-md-4 text-end mt-3 mt-md-0"
+        data-test="start-workday-button"
+      >
+        <button
+          class="btn btn-success rounded-pill px-4 py-2 fw-bold"
+          (click)="store.startWorkday()"
+        >
           Start the work day
         </button>
       </div>
@@ -41,8 +68,12 @@
         <h6 class="mb-3 text-muted">Tâches restantes</h6>
       }
 
-      <app-taskfield [task]="task" [index]="$index" (taskUpdated)="store.updateTask($index,$event)"
-        (taskRemoved)="store.removeTask($index)"/>
+      <app-taskfield
+        [task]="task"
+        [index]="$index"
+        (taskUpdated)="store.updateTask($index, $event)"
+        (taskRemoved)="store.removeTask($index)"
+      />
     }
   }
   <!-- Ajouter une tâche -->
