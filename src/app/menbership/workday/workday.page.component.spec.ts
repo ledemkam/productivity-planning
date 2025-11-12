@@ -20,6 +20,12 @@ describe('WorkdayPageComponent', () => {
     fixture.debugElement.query(By.css(`[data-testid="task-input-${id - 1}"]`));
   const getRemoveTaskButton = (id: number) =>
     fixture.debugElement.query(By.css(`[data-testid="task-remove-${id - 1}"]`));
+  const getInboxZeroPlaceholder = () =>
+    fixture.debugElement.query(
+      By.css('[data-testid="inbox-zero-placeholder"]')
+    );
+
+
   const setTaskTitle = (id: number, title: string) => {
     const input = getTaskInput(id).nativeElement as HTMLInputElement;
     input.value = title;
@@ -106,11 +112,14 @@ describe('WorkdayPageComponent', () => {
     });
   });
 
-  describe('when there are no tasks', () => {
+  describe('when  no tasks is planed', () => {
     beforeEach(() => {
       // Remove the default task that is created on component initialization
       getRemoveTaskButton(1).nativeElement.click();
       fixture.detectChanges();
+    });
+      it('should display inbox zero placeholder', () => {
+      expect(getInboxZeroPlaceholder()).toBeTruthy();
     });
 
     it('should hide "Start the work day" button', () => {
