@@ -69,14 +69,22 @@
         <h6 class="mb-3 text-muted">Tâches restantes</h6>
       }
 
+       @if(store.isEditmode()) {
       <app-taskfield
         [task]="task"
         [index]="$index"
         (taskUpdated)="store.updateTask($index, $event)"
         (taskRemoved)="store.removeTask($index)"
       />
+       }
+      @if(store.isExecutionMode()) {
+      <app-task-readonly
+        [task]="task"
+        [index]="$index"
+      />
+       }
     }
-  }
+
   <!-- Ajouter une tâche -->
   <div class="text-center">
     @if (store.isButtonDisplayed()) {
@@ -89,4 +97,5 @@
       </button>
     }
   </div>
+  }
 </div>
