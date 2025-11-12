@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+
   input,
   model,
   output,
@@ -9,11 +10,9 @@ import { PomodoroCount, Task, TaskType } from '../workday.page.store';
 
 @Component({
   selector: 'app-taskfield',
-  imports: [],
   templateUrl: './taskfield.dumb.component.html',
-  styleUrl: './taskfield.dumb.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {
+   host: {
     class: 'card',
     '[attr.data-testid]': '`task-${index()}`',
   },
@@ -26,20 +25,22 @@ export class TaskfieldDumbComponent {
   readonly taskRemoved = output<void>();
 
   updateTaskType(type: string): void {
-    const task: Task = { ...this.task(), type: type as TaskType };
-    this.taskUpdated.emit(task);
-  }
+      const task: Task = { ...this.task(), type: type as TaskType };
+      this.taskUpdated.emit(task);
+    }
 
-  updateTitle(title: string): void {
-    const task: Task = { ...this.task(), title };
-    this.taskUpdated.emit(task);
-  }
+    updateTitle(title: string): void {
+      const task: Task = { ...this.task(), title };
+      this.taskUpdated.emit(task);
+    }
 
-  updatePomodoroCount(pomodoroCount: string): void {
-    const task: Task = {
-      ...this.task(),
-      pomodoroCount: Number(pomodoroCount) as PomodoroCount,
-    };
-    this.taskUpdated.emit(task);
-  }
+    updatePomodoroCount(pomodoroCount: string): void {
+      const task: Task = {
+        ...this.task(),
+        pomodoroCount: Number(pomodoroCount) as PomodoroCount,
+      };
+      this.taskUpdated.emit(task);
+    }
+
+
 }
