@@ -6,63 +6,48 @@ import {
   withMethods,
   withState,
 } from '@ngrx/signals';
-
-interface Pomodoro {
-  status: 'Not started' | 'In progress' | 'Done';
-  currentTime: number;
-  duration: number;
-  isCompleted: boolean;
-}
-
-type PomodoroList = Pomodoro[];
-export type TaskType = 'Hit the target' | 'Get things done';
-export type PomodoroCount = 1 | 2 | 3 | 4 | 5;
-export interface Task {
-  type: TaskType;
-  title: string;
-  pomodoroCount: PomodoroCount;
-  pomodoroList: PomodoroList;
-}
-
-type TaskList = Task[];
+import { timer } from 'rxjs';
+import {
+  Task,
+  TaskList,
+  WORKDAY_TASK_LIMIT,
+  DEFAULT_POMODORO_DURATION,
+} from './task.model';
 
 interface WorkdayState {
   date: string;
   taskList: TaskList;
   progress: number;
-  mode: "edit" | "execution"
+  mode: 'edit' | 'execution';
 }
 
 const getEmptyTask = (): Task => ({
   type: 'Hit the target',
   title: 'Nouvelle tâche',
+  status: 'Not started',
   pomodoroCount: 1,
   pomodoroList: [
     {
-      status: 'Not started',
       currentTime: 0,
-      duration: 1500,
-      isCompleted: false,
+      duration: DEFAULT_POMODORO_DURATION
     },
   ],
 });
-
-const WORKDAY_TASK_LIMIT = 6;
 
 export const WorkdayStore = signalStore(
   withState<WorkdayState>({
     date: '2019-02-28',
     taskList: [getEmptyTask()],
     progress: 0,
-    mode: "edit"
+    mode: 'edit',
   }),
   withComputed((state) => {
     const taskCount = computed(() => state.taskList().length);
     const isButtonDisplayed = computed(() => taskCount() < WORKDAY_TASK_LIMIT);
     const hasNoTaskPlanned = computed(() => taskCount() === 0);
     const hasTaskPlanned = computed(() => taskCount() > 0);
-    const isEditmode = computed(() => state.mode() === 'edit')
-    const isExecutionMode = computed(() => state.mode() === 'execution')
+    const isEditmode = computed(() => state.mode() === 'edit');
+    const isExecutionMode = computed(() => state.mode() === 'execution');
 
     return {
       taskCount,
@@ -70,13 +55,36 @@ export const WorkdayStore = signalStore(
       hasNoTaskPlanned,
       hasTaskPlanned,
       isEditmode,
-      isExecutionMode
+      isExecutionMode,
     };
   }),
   withMethods((store) => ({
-    startWorkday(){
-      patchState(store,{ mode: 'execution'})
+    // calculateProgress(taskList: TaskList): number {
+    //   let completedPomodoros = 0;
+    //   for (const task of taskList) {
+    //     for (const pomodoro of task.pomodoroList) {
+    //       if (pomodoro.isCompleted) {
+    //         completedPomodoros++;
+    //       }
+    //     }
+    //   }
+    //   const totalPomodoros = taskList.reduce((sum, task) => sum + task.pomodoroCount, 0);
+    //   return totalPomodoros === 0 ? 0 : Math.floor((completedPomodoros / totalPomodoros) * 100);
+    // },
+
+    startWorkday() {
+      patchState(store, { mode: 'execution' });
+      console.log("start");
+
+      timer(0, 1000).subscribe((elapsedSeconds: number) => {
+        patchState(store, () => {
+          console.log('elapsedSecond', elapsedSeconds);
+
+          return { progress: elapsedSeconds };
+        });
+      });
     },
+
     addTask() {
       patchState(store, (state) => ({
         taskList: [...state.taskList, getEmptyTask()],
@@ -96,11 +104,10 @@ export const WorkdayStore = signalStore(
         const taskList: TaskList = state.taskList.toSpliced(
           index,
           1,
-          updatedTask
+          updatedTask,
         );
         return { taskList };
       });
     },
-
-  }))
+  })),
 );
