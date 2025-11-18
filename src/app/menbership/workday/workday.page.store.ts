@@ -1,12 +1,14 @@
-import { computed } from '@angular/core';
+import { computed, DestroyRef, inject } from '@angular/core';
 import {
   patchState,
   signalStore,
   withComputed,
   withMethods,
+  withProps,
   withState,
 } from '@ngrx/signals';
 import { timer } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   Task,
   TaskList,
@@ -41,6 +43,9 @@ export const WorkdayStore = signalStore(
     progress: 0,
     mode: 'edit',
   }),
+  withProps(() => ({
+    destroyRef: inject(DestroyRef),
+  })),
   withComputed((state) => {
     const taskCount = computed(() => state.taskList().length);
     const isButtonDisplayed = computed(() => taskCount() < WORKDAY_TASK_LIMIT);
@@ -58,7 +63,7 @@ export const WorkdayStore = signalStore(
       isExecutionMode,
     };
   }),
-  withMethods((store) => ({
+  withMethods(({destroyRef, ...store}) => ({
     // calculateProgress(taskList: TaskList): number {
     //   let completedPomodoros = 0;
     //   for (const task of taskList) {
@@ -76,7 +81,9 @@ export const WorkdayStore = signalStore(
       patchState(store, { mode: 'execution' });
       console.log("start");
 
-      timer(0, 1000).subscribe((elapsedSeconds: number) => {
+      timer(0, 1000)
+      .pipe(takeUntilDestroyed(destroyRef))
+      .subscribe((elapsedSeconds: number) => {
         patchState(store, () => {
           console.log('elapsedSecond', elapsedSeconds);
 
