@@ -53,6 +53,9 @@ export const WorkdayStore = signalStore(
     const hasTaskPlanned = computed(() => taskCount() > 0);
     const isEditmode = computed(() => state.mode() === 'edit');
     const isExecutionMode = computed(() => state.mode() === 'execution');
+    const pomodoroProgress = computed(() => {
+      return Math.floor((state.progress() / DEFAULT_POMODORO_DURATION) * 100);
+    })
 
     return {
       taskCount,
@@ -61,26 +64,13 @@ export const WorkdayStore = signalStore(
       hasTaskPlanned,
       isEditmode,
       isExecutionMode,
+      pomodoroProgress,
     };
   }),
   withMethods(({destroyRef, ...store}) => ({
-    // calculateProgress(taskList: TaskList): number {
-    //   let completedPomodoros = 0;
-    //   for (const task of taskList) {
-    //     for (const pomodoro of task.pomodoroList) {
-    //       if (pomodoro.isCompleted) {
-    //         completedPomodoros++;
-    //       }
-    //     }
-    //   }
-    //   const totalPomodoros = taskList.reduce((sum, task) => sum + task.pomodoroCount, 0);
-    //   return totalPomodoros === 0 ? 0 : Math.floor((completedPomodoros / totalPomodoros) * 100);
-    // },
-
     startWorkday() {
       patchState(store, { mode: 'execution' });
       console.log("start");
-
       timer(0, 1000)
       .pipe(takeUntilDestroyed(destroyRef))
       .subscribe((elapsedSeconds: number) => {
