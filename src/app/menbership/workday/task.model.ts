@@ -1,6 +1,6 @@
 // All Constants
 export const WORKDAY_TASK_LIMIT = 6;
-export const DEFAULT_POMODORO_DURATION = 1500; // in seconds (25 minutes)
+export const DEFAULT_POMODORO_DURATION = 5; // in seconds (25 minutes)
 
 // Model for task
 export interface Task {
