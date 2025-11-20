@@ -7,13 +7,18 @@ import {
   withProps,
   withState,
 } from '@ngrx/signals';
-import { timer } from 'rxjs';
+import { Subject, takeUntil, timer } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
+  getActivePomodoroIndex,
+  getActiveTask,
+  getActiveTaskIndex,
+  getTaskEmojiStatus,
+  isTaskCompleted,
   MAXIMUN_POMODORO_DURATION,
+  PomodoroList,
   Task,
   TaskList,
-
 } from './task.model';
 
 interface WorkdayState {
@@ -29,6 +34,7 @@ const getEmptyTask = (): Task => ({
   status: 'Not started',
   pomodoroCount: 1,
   pomodoroList: [0],
+  statusEmoji: '🏁',
 });
 
 const WORKDAY_TASK_LIMIT = 6
@@ -42,6 +48,7 @@ export const WorkdayStore = signalStore(
   }),
   withProps(() => ({
     destroyRef: inject(DestroyRef),
+    pomodoroCompleted: new Subject<void>(),
   })),
   withComputed((state) => {
     const taskCount = computed(() => state.taskList().length);
@@ -64,19 +71,64 @@ export const WorkdayStore = signalStore(
       pomodoroProgress,
     };
   }),
-  withMethods(({destroyRef, ...store}) => ({
+  withMethods(({destroyRef,pomodoroCompleted, ...store}) => ({
     startWorkday() {
       patchState(store, { mode: 'execution' });
       console.log("start");
       timer(0, 1000)
-      .pipe(takeUntilDestroyed(destroyRef))
+      .pipe(takeUntil(pomodoroCompleted),takeUntilDestroyed(destroyRef))
       .subscribe((elapsedSeconds: number) => {
-        patchState(store, () => {
-          console.log('elapsedSecond', elapsedSeconds);
+        console.log('elapsedSecond', elapsedSeconds);
+       patchState(store, { progress: elapsedSeconds });
+          patchState(store, (state) => {
+            // Update current pomodoro time immutably so signals detect the change
+            const task = getActiveTask(state.taskList);
+            const taskIndex = getActiveTaskIndex(state.taskList);
 
-          return { progress: elapsedSeconds };
+            if (!task) {
+              throw new Error('No active task found');
+            }
+
+            const pomodoroIndex = getActivePomodoroIndex(task);
+
+            if (pomodoroIndex === -1) {
+              throw new Error('No active pomodoro found');
+            }
+
+            // Create a new pomodoro list and a new task object (immutable update)
+            const newPomodoroList = [...task.pomodoroList] as PomodoroList;
+            newPomodoroList[pomodoroIndex] = elapsedSeconds;
+
+            const updatedTask: Task = {
+              ...task,
+              pomodoroList: newPomodoroList,
+              statusEmoji: getTaskEmojiStatus({
+                ...task,
+                pomodoroList: newPomodoroList,
+              }),
+            };
+
+            const taskList: TaskList = store
+              .taskList()
+              .toSpliced(taskIndex, 1, updatedTask);
+
+            return { taskList };
+          });
+
+          // Check completed state
+          if (elapsedSeconds === MAXIMUN_POMODORO_DURATION) {
+            pomodoroCompleted.next();
+            patchState(store, { mode: 'edit', progress: 0 });
+          }
         });
+    },
+    isWorkdayCompleted(): boolean {
+      return store.taskList().every((task) => {
+        return isTaskCompleted(task);
       });
+    },
+    isTaskCompleted(task: Task): boolean {
+      return isTaskCompleted(task);
     },
 
     addTask() {
@@ -105,3 +157,6 @@ export const WorkdayStore = signalStore(
     },
   })),
 );
+
+
+
