@@ -10,10 +10,10 @@ import {
 import { timer } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
+  MAXIMUN_POMODORO_DURATION,
   Task,
   TaskList,
-  WORKDAY_TASK_LIMIT,
-  DEFAULT_POMODORO_DURATION,
+
 } from './task.model';
 
 interface WorkdayState {
@@ -28,13 +28,10 @@ const getEmptyTask = (): Task => ({
   title: 'Nouvelle tâche',
   status: 'Not started',
   pomodoroCount: 1,
-  pomodoroList: [
-    {
-      currentTime: 0,
-      duration: DEFAULT_POMODORO_DURATION
-    },
-  ],
+  pomodoroList: [0],
 });
+
+const WORKDAY_TASK_LIMIT = 6
 
 export const WorkdayStore = signalStore(
   withState<WorkdayState>({
@@ -54,7 +51,7 @@ export const WorkdayStore = signalStore(
     const isEditmode = computed(() => state.mode() === 'edit');
     const isExecutionMode = computed(() => state.mode() === 'execution');
     const pomodoroProgress = computed(() => {
-      return Math.floor((state.progress() / DEFAULT_POMODORO_DURATION) * 100);
+      return Math.floor((state.progress() / MAXIMUN_POMODORO_DURATION) * 100);
     })
 
     return {
