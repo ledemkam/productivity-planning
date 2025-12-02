@@ -6,7 +6,7 @@
         </p>
       }@else{
         <p class="w-auto me-3">
-          '✅'
+          '⛳️'
         </p>
 
     }
@@ -18,11 +18,9 @@
 
     <div class="d-flex align-items-center ms-3">
         <p class="form-select w-auto me-3">{{task().pomodoroCount}}</p>
-        <button class="btn btn-sm">⏸</button>
-        <button class="btn btn-sm">⏸</button>
-        <button class="btn btn-sm">⏸</button>
-        <button class="btn btn-sm">⏸</button>
-        <button class="btn btn-sm">⏸</button>
+        @for (emoji of pomodoroListEmojiStatus(); track $index) {
+          <button class="btn btn-sm">{{emoji}}</button>
+        }
         <span class="mx-3 fs-5">0</span>
-        <span>👁️‍🗨️</span>
+        <span>{{task().statusEmoji}}</span>
     </div>

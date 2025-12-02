@@ -6,7 +6,7 @@ import {
   model,
   output,
 } from '@angular/core';
-import { PomodoroCount, Task, TaskType } from '../workday.page.store';
+import { Task, TaskType, PomodoroCount } from '../task.model';
 
 @Component({
   selector: 'app-taskfield',

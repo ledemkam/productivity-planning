@@ -14,25 +14,16 @@
         [disabled]="store.isExecutionMode()"
       />
       @if (store.isExecutionMode()) {
-        <div class="d-flex flex-column align-items-center mt-2">
-          <div
-            class="progress w-100"
-            style="height: 1rem"
-            data-testid="worday-progress"
-          >
-            <div
-              class="progress-bar bg-success"
-              role="progressbar"
-              [style.width.%]="store.progress()"
-              [attr.aria-valuenow]="store.progress()"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            >
-              {{ store.progress() }}%
-            </div>
+       <div class="d-flex flex-column align-items-center mt-2">
+        <div class="progress w-100" data-testid="workday-progress">
+          <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar"
+            [style.width.%]="store.pomodoroProgress()" [attr.aria-valuenow]="store.pomodoroProgress()" aria-valuemin="0"
+            aria-valuemax="100">
+            {{store.pomodoroProgress()}}%
           </div>
-          <p class="text-muted small text-center w-100">{{store.progress()}} secondes have passed.</p>
         </div>
+        <p class="small text-muted mt-2 text-center w-100">{{ store.progress() }} seconds have passed.</p>
+      </div>
       }
     </div>
     @if (store.hasTaskPlanned() && store.isEditmode()) {

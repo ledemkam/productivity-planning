@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, input, model,  } from '@angular/core';
-import { Task} from '../workday.page.store';
+import { ChangeDetectionStrategy, Component, computed, effect, input  } from '@angular/core';
+import { getPomodoroListEmojiStatus, Task } from '../task.model';
 
 @Component({
   selector: 'app-task-readonly',
@@ -11,9 +11,17 @@ import { Task} from '../workday.page.store';
   },
 })
 export class TaskReadonlyDumbComponent {
-  readonly task = model.required<Task>();
+  readonly task = input.required<Task>();
   readonly index = input.required<number>();
 
+constructor(){
+   effect(() => {
+      console.log(this.task());
+    });
+}
 
+ readonly pomodoroListEmojiStatus = computed(() => {
+   return getPomodoroListEmojiStatus(this.task().pomodoroList);
+ })
 
 }
